@@ -29,6 +29,36 @@
 
     <!-- Template Main CSS File -->
     <link href="../../assets/css/main.css" rel="stylesheet" />
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+
+
+
+    <script>
+        /*
+         * Funciones JQUERY para la carga de la tabla con los libros
+         */
+        $(document).ready(function () {
+            console.log('holiii');
+            $.ajax({
+                url: "Libros.asmx/RecuperarLibros",
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                   
+
+                    $(data).each(function (index, lib) {
+                        $('#tablaLibros tbody').append('<tr><td>' + lib.idLibro + '</td><td>'
+                            + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
+                            + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
+                            + lib.editorial + '</td>');
+                    });
+                }
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -61,7 +91,7 @@
                 <!-- .navbar -->
 
 
-                <asp:Button ID="btnCerrarSesion" class="btn-getstarted scrollto" runat="server" Text="Cerrar Sesion" OnClick="btnCerrarSesion_Click"  />
+                <asp:Button ID="btnCerrarSesion" class="btn-getstarted scrollto" runat="server" Text="Cerrar Sesion" OnClick="btnCerrarSesion_Click" />
 
             </div>
         </header>
@@ -82,17 +112,19 @@
         <div class="container justify-content-center col-lg-10">
             <h1 class="display-3 mt-5 mb-4">Libros disponibles en la base de datos:</h1>
 
-            <table class="table tabl-hover table-striped">
+            <table id="tablaLibros" class="table tabl-hover table-striped">
                 <thead>
                     <tr>
                         <th scope="col">ID Libro</th>
-                        <th scope="col">ID Libro</th>
+                        <th scope="col">Categoria</th>
                         <th scope="col">ISBN</th>
                         <th scope="col">Titulo</th>
-                        <th scope="col">Escritor</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Editorial</th>
                     </tr>
                 </thead>
-
+                <tbody>
+                </tbody>
             </table>
         </div>
         <!-- Fin tabla libros que hay en la base de datos -->
