@@ -46,10 +46,10 @@
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                   
+                      
 
                     $(data).each(function (index, lib) {
-                        $('#tablaLibros tbody').append('<tr><td>' + lib.idLibro + '</td><td>'
+                        $('#tablaLibros tbody').append('<tr><td><a href="InfoLibro.aspx?idLibro='+ lib.idLibro + '">Select</a></td><td>' + lib.idLibro + '</td><td>'
                             + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
                             + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
                             + lib.editorial + '</td>');
@@ -76,14 +76,11 @@
 
                 <nav id="navbar" class="navbar">
                     <ul>
-
                         <li><a class="nav-link scrollto" href="index.html#about">Realizar Prestamo</a></li>
                         <li><a class="nav-link scrollto" href="index.html#services">Prestamos</a></li>
                         <li><a class="nav-link scrollto" href="index.html#portfolio">Realizar Devolucion</a></li>
                         <li><a class="nav-link scrollto" href="index.html#team">Ampliar Devolucion</a></li>
                         <li><a href="blog.html">Agregar Ejemplar</a></li>
-
-
                         <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
@@ -115,6 +112,7 @@
             <table id="tablaLibros" class="table tabl-hover table-striped">
                 <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">ID Libro</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">ISBN</th>
