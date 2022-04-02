@@ -40,7 +40,7 @@
          * Funciones JQUERY para la carga de la tabla con los libros
          */
         $(document).ready(function () {
-            console.log('holiii');
+            
             $.ajax({
                 url: "Libros.asmx/RecuperarLibros",
                 method: 'post',
