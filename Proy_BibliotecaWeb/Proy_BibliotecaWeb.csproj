@@ -206,7 +206,7 @@
     <Content Include="HeroBiz\index-3.html" />
     <Content Include="HeroBiz\index-4.html" />
     <Content Include="Vistas\Administrador\InfoLibro.aspx" />
-    <Content Include="Vistas\Administrador\Libros.asmx" />
+    <Content Include="Controladores\Libros.asmx" />
     <Content Include="Vistas\Administrador\AdminHome.aspx" />
     <Content Include="Vistas\index.html" />
     <Content Include="HeroBiz\inner-page.html" />
@@ -239,7 +239,7 @@
     <Compile Include="Vistas\Administrador\InfoLibro.aspx.designer.cs">
       <DependentUpon>InfoLibro.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Administrador\Libros.asmx.cs">
+    <Compile Include="Controladores\Libros.asmx.cs">
       <DependentUpon>Libros.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
@@ -323,8 +323,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controladores\" />
     <Folder Include="ServiciosWeb\" />
+    <Folder Include="Vistas\Administrador\Controladores\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

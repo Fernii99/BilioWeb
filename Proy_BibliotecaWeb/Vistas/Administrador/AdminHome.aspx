@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
+    <title>Home Administrador</title>
 
     <!-- Favicons -->
     <link href="../../assets/img/favicon.png" rel="icon" />
@@ -31,7 +31,7 @@
     <link href="../../assets/css/main.css" rel="stylesheet" />
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
 
@@ -40,16 +40,14 @@
          * Funciones JQUERY para la carga de la tabla con los libros
          */
         $(document).ready(function () {
-            
+
             $.ajax({
-                url: "Libros.asmx/RecuperarLibros",
+                url: "../..//Controladores/Libros.asmx/RecuperarLibros",
                 method: 'post',
                 dataType: 'json',
                 success: function (data) {
-                      
-
                     $(data).each(function (index, lib) {
-                        $('#tablaLibros tbody').append('<tr><td><a href="InfoLibro.aspx?idLibro='+ lib.idLibro + '">Select</a></td><td>' + lib.idLibro + '</td><td>'
+                        $('#tablaLibros tbody').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Select</a></td><td>' + lib.idLibro + '</td><td>'
                             + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
                             + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
                             + lib.editorial + '</td>');
@@ -96,11 +94,8 @@
 
         <section id="hero-animated" class="hero-animated d-flex align-items-center">
             <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
-
                 <h2>BIENVENIDO AL APLICATIVO:  <span>
                     <asp:Label ID="txtNombreUsuario" runat="server" Text="Label"></asp:Label></span></h2>
-                <p>Gestión de libros, préstamos y usuarios de una biblioteca de un colegio/universidad.</p>
-
             </div>
         </section>
 
@@ -109,11 +104,12 @@
         <div class="container justify-content-center col-lg-10">
             <h1 class="display-3 mt-5 mb-4">Libros disponibles en la base de datos:</h1>
 
-            <table id="tablaLibros" class="table tabl-hover table-striped">
+
+            <table id="tablaLibros" class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col"></th>
-                        <th scope="col">ID Libro</th>
+                        <th scope="col">Id Libro</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">ISBN</th>
                         <th scope="col">Titulo</th>
@@ -122,8 +118,11 @@
                     </tr>
                 </thead>
                 <tbody>
+                   
                 </tbody>
             </table>
+
+
         </div>
         <!-- Fin tabla libros que hay en la base de datos -->
 
