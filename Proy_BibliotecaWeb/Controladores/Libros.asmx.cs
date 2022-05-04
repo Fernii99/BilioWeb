@@ -71,5 +71,59 @@ namespace Proy_BibliotecaWeb.SeriviciosWeb
             Context.Response.Write(js.Serialize(listaLibros));
         }
 
+        [WebMethod]
+        public void RecuperarEjemplares()
+        {
+
+            List<Clases.Libro> listaLibros = new List<Clases.Libro>();
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = strConexion;
+
+            SqlCommand cmdRecuperarLibros = new SqlCommand();
+            cmdRecuperarLibros.Connection = con;
+
+            SqlParameter prmidLibro = new SqlParameter();
+            prmidLibro.ParameterName = "@p_idLibro";
+            prmidLibro.SqlDbType = SqlDbType.Char;
+
+            SqlDataReader lectorLibros;
+
+
+
+            cmdRecuperarLibros.CommandType = CommandType.StoredProcedure;
+            cmdRecuperarLibros.CommandText = "pr_cargarEjemplares";
+
+            cmdRecuperarLibros.Parameters.Add(prmidLibro);
+
+            con.Open();
+
+            cmdRecuperarLibros.Parameters[0].Value = Context.Request.Params["idLibro"];
+
+            lectorLibros = cmdRecuperarLibros.ExecuteReader();
+
+            while (lectorLibros.Read())
+            {
+
+                Clases.Libro objLibro = new Clases.Libro();
+
+
+                objLibro.idLibro = lectorLibros["idLibro"].ToString();
+                objLibro.categoria = lectorLibros["idEjemplar"].ToString();
+                objLibro.ISBN = lectorLibros["fechaRecepcion"].ToString();
+                objLibro.titulo = lectorLibros["estado"].ToString();
+                objLibro.autor = lectorLibros["baja"].ToString();
+                objLibro.editorial = lectorLibros["problema"].ToString();
+
+                listaLibros.Add(objLibro);
+
+            }
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(listaLibros));
+        }
+
+
+
+
     }
 }

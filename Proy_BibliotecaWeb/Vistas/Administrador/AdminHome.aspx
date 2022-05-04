@@ -36,25 +36,32 @@
 
 
     <script>
+
         /*
          * Funciones JQUERY para la carga de la tabla con los libros
          */
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
-            $.ajax({
-                url: "../..//Controladores/Libros.asmx/RecuperarLibros",
-                method: 'post',
-                dataType: 'json',
-                success: function (data) {
-                    $(data).each(function (index, lib) {
-                        $('#tablaLibros tbody').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Select</a></td><td>' + lib.idLibro + '</td><td>'
-                            + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
-                            + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
-                            + lib.editorial + '</td>');
-                    });
-                }
-            });
-        });
+        //    $.ajax({
+        //        url: "../..//Controladores/Libros.asmx/RecuperarLibros",
+        //        method: 'post',
+        //        dataType: 'json',
+        //        success: function (data) {
+
+        //            $(data).each(function (index, lib) {
+
+        //                $('#tablaLibros').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Seleccionar Libro</td><td>' + lib.idLibro + '</td><td>'
+        //                    + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
+        //                    + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
+        //                    + lib.editorial + '</td>');
+        //            });
+
+
+
+        //        },
+        //    })
+        //});
+
     </script>
 
 </head>
@@ -105,25 +112,22 @@
             <h1 class="display-3 mt-5 mb-4">Libros disponibles en la base de datos:</h1>
 
 
-            <table id="tablaLibros" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Id Libro</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">ISBN</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Autor</th>
-                        <th scope="col">Editorial</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   
-                </tbody>
-            </table>
+
 
 
         </div>
+        <div class="container col-lg-12 justify-content-center">
+            <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por titulo:" style="margin-right:10px;"></asp:Label><asp:TextBox ID="txtFiltro" runat="server" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
+            <asp:Button ID="btnFiltrarLibros" runat="server" Text="Button" OnClick="btnFiltrarLibros_Click" />
+            <br />
+            <asp:GridView ID="grdLibros" runat="server" class="table table-striped " AllowPaging="True" OnPageIndexChanging="grdLibros_PageIndexChanging" >
+            </asp:GridView>
+        </div>
+
+
+
+
+        
         <!-- Fin tabla libros que hay en la base de datos -->
 
 

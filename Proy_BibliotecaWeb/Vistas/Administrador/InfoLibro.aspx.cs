@@ -16,6 +16,32 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         //al cargar la página recupera y carga la informacion del libro que se ha seleccionado
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Convert.ToInt32(Session["idUsuario"]) != 1)
+            {
+                Response.Redirect("../login.aspx");
+            }
+            else
+            {
+                cargarInformacionLibro();
+            }
+           
+           
+
+        }
+
+       
+
+
+        //Click del botón que limpia todos los datos de la sesión, y redirije a la página de login
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("../login.aspx");
+            Session.Clear();
+        }
+
+        //CARGAR LA INFORMACION ESPECIFICA DEL LIBRO
+        private void cargarInformacionLibro()
+        {
             String strConexion = ConfigurationManager.ConnectionStrings["BiblioWeb"].ConnectionString;
             SqlConnection con = new SqlConnection();
 
@@ -25,7 +51,7 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             cmdRecuperarInfoLibro.CommandType = CommandType.StoredProcedure;
             cmdRecuperarInfoLibro.CommandText = "pr_InfoLibro";
             cmdRecuperarInfoLibro.Connection = con;
-            
+
             SqlParameter prmIdLibro = new SqlParameter();
             prmIdLibro.ParameterName = "@p_idLibro";
             prmIdLibro.SqlDbType = SqlDbType.Char;
@@ -34,9 +60,9 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             SqlDataReader lector;
 
             cmdRecuperarInfoLibro.Parameters.Add(prmIdLibro);
-            
+
             con.Open();
-            
+
             cmdRecuperarInfoLibro.Parameters[0].Value = Request.QueryString["idLibro"];
 
             lector = cmdRecuperarInfoLibro.ExecuteReader();
@@ -57,18 +83,9 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             }
 
             con.Close();
-
-
-
         }
 
 
-        //Click del botón que limpia todos los datos de la sesión, y redirije a la página de login
-        protected void btnCerrarSesion_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("../login.aspx");
-            Session.Clear();
-        }
 
 
     }

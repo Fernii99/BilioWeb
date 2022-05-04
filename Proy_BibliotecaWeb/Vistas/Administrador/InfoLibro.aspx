@@ -5,10 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title> Informacion Libro</title>
+    <title>Informacion Libro</title>
 
     <!-- Favicons -->
-  <link href="../../assets/img/favicon.png" rel="icon" />
+    <link href="../../assets/img/favicon.png" rel="icon" />
     <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
     <!-- Google Fonts -->
@@ -41,21 +41,26 @@
          */
         $(document).ready(function () {
 
+            var ParametrosURL = location.search.substring(1);
+            var valores = ParametrosURL.split("=");
+            var idLibro = valores[1];
+
             $.ajax({
-                url: "Libros.asmx/RecuperarLibros",
+                url: "../..//Controladores/Libros.asmx/RecuperarEjemplares",
                 method: 'post',
+                data: { idLibro: idLibro },
                 dataType: 'json',
                 success: function (data) {
-
                     $(data).each(function (index, lib) {
-                        $('#tablaLibros tbody').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Select</a></td><td>' + lib.idLibro + '</td><td>'
+
+                        $('#tablaEjemplares').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Seleccionar Libro</td><td>' + lib.idLibro + '</td><td>'
                             + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
                             + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
                             + lib.editorial + '</td>');
                     });
+                },
+            })
 
-                }
-            });
         });
     </script>
 
@@ -94,76 +99,78 @@
         </header>
 
 
-         <section id="hero-animated" class="hero-animated d-flex align-items-center">
+        <section id="hero-animated" class="hero-animated d-flex align-items-center">
             <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
-                <h2><asp:Label ID="txtTituloLibro" runat="server" Text="Label"></asp:Label></span></h2>
+                <h2>
+                    <asp:Label ID="txtTituloLibro" runat="server" Text="Label"></asp:Label></span></h2>
             </div>
         </section>
-        
+
 
         <!-- Bloque de información sobre el libro seleccionado -->
-            <div class="mb-5 container text-center ">
-                <div class="row">
-                    <div class="col-4">
-                        <asp:Label ID="Label1" runat="server" CssClass="fw-bold" Text="Id Libro: "></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label2" runat="server" CssClass="fw-bold" Text="Categoria:"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label3" runat="server" CssClass="fw-bold" Text="ISBN:"></asp:Label>
-                    </div>
+        <div class="mb-5 container text-center ">
+            <div class="row">
+                <div class="col-4">
+                    <asp:Label ID="Label1" runat="server" CssClass="fw-bold" Text="Id Libro: "></asp:Label>
                 </div>
-                <div class="row text-center mb-3">
-                    <div class="col-4">
-                        <asp:Label ID="txtIdLibro" runat="server" Text="a" ></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="txtCategoria" runat="server" Text="b"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="txtISBN" runat="server" Text="c"></asp:Label>
-                    </div>
+                <div class="col-4">
+                    <asp:Label ID="Label2" runat="server" CssClass="fw-bold" Text="Categoria:"></asp:Label>
+                </div>
+                <div class="col-4">
+                    <asp:Label ID="Label3" runat="server" CssClass="fw-bold" Text="ISBN:"></asp:Label>
                 </div>
             </div>
-            <div class="container mb-5 text-center">
-                <div class="row text-center">
-                    <div class="col-4">
-                        <asp:Label ID="Label4" CssClass="fw-bold" runat="server" Text="Titulo:"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label5" CssClass="fw-bold" runat="server" Text="Autor:"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label6" CssClass="fw-bold" runat="server" Text="Editorial:"></asp:Label>
-                    </div>
-                </div><div class="row text-center mb-3">
-                    <div class="col-4">
-                        <asp:Label ID="txtTitulo" runat="server" Text="Titulo"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="txtAutor" runat="server" Text="Autor"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="txtEditorial" runat="server" Text="Editorial"></asp:Label>
-                    </div>
+            <div class="row text-center mb-3">
+                <div class="col-4">
+                    <asp:Label ID="txtIdLibro" runat="server" Text="a"></asp:Label>
                 </div>
-            </div>
-            <div class="container mb-5">
-                <div class="row">
-                    <div>
-                        <asp:Label ID="Label8" CssClass="fw-bold" runat="server" Text="Sinopsis:"></asp:Label>
-                    </div>
-                    <div>
-                        <asp:Label ID="txtSinopsis" runat="server" Text="Label"></asp:Label>
-                    </div>
+                <div class="col-4">
+                    <asp:Label ID="txtCategoria" runat="server" Text="b"></asp:Label>
+                </div>
+                <div class="col-4">
+                    <asp:Label ID="txtISBN" runat="server" Text="c"></asp:Label>
                 </div>
             </div>
         </div>
+        <div class="container mb-5 text-center">
+            <div class="row text-center">
+                <div class="col-4">
+                    <asp:Label ID="Label4" CssClass="fw-bold" runat="server" Text="Titulo:"></asp:Label>
+                </div>
+                <div class="col-4">
+                    <asp:Label ID="Label5" CssClass="fw-bold" runat="server" Text="Autor:"></asp:Label>
+                </div>
+                <div class="col-4">
+                    <asp:Label ID="Label6" CssClass="fw-bold" runat="server" Text="Editorial:"></asp:Label>
+                </div>
+            </div>
+            <div class="row text-center mb-3">
+                <div class="col-4">
+                    <asp:Label ID="txtTitulo" runat="server" Text="Titulo"></asp:Label>
+                </div>
+                <div class="col-4">
+                    <asp:Label ID="txtAutor" runat="server" Text="Autor"></asp:Label>
+                </div>
+                <div class="col-4">
+                    <asp:Label ID="txtEditorial" runat="server" Text="Editorial"></asp:Label>
+                </div>
+            </div>
+        </div>
+        <div class="container mb-5">
+            <div class="row">
+                <div>
+                    <asp:Label ID="Label8" CssClass="fw-bold" runat="server" Text="Sinopsis:"></asp:Label>
+                </div>
+                <div>
+                    <asp:Label ID="txtSinopsis" runat="server" Text="Label"></asp:Label>
+                </div>
+            </div>
+        </div>
+        </div>
 
-        <div style=" margin-bottom:40px; margin-left:10%; width :80%">
-             <table id="dataTable" class=" display" style=" width:90%" >
-                <thead>
+        <div style="margin-bottom: 40px; margin-left: 10%; width: 80%">
+            <table class="table" id="tablaEjemplares">
+                <thead class="thead-light">
                     <tr>
                         <th>Id Libro</th>
                         <th>Id Ejemplar</th>
@@ -172,73 +179,12 @@
                         <th>Problema</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>Id Libro</th>
-                        <th>Id Ejemplar</th>
-                        <th>Estado</th>
-                        <th>Baja</th>
-                        <th>Problema</th>
-                    </tr>
-                </tfoot>
+                <tbody>
+                </tbody>
             </table>
+            
+
         </div>
-
-         <div id="FrmActualizarEjemplar" class="mb-5 container text-center " hidden="hidden">
-             <h3> Datos del ejemplar seleccionado a actualizar</h3>
-
-                <div class="row">
-                    <div class="col-4">
-                        <asp:Label ID="Label7" runat="server" CssClass="fw-bold" Text="Id Libro: "></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label9" runat="server" CssClass="fw-bold" Text="IdEjemplar:"></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label10" runat="server" CssClass="fw-bold" Text="Estado:"></asp:Label>
-                    </div>
-                </div>
-
-                <div class="row text-center mb-3">
-                    <div class="col-4">
-                        <asp:TextBox ID="txtcodLibro" runat="server" disabled="disabled"></asp:TextBox>
-                        
-                    </div>
-                    <div class="col-4">
-                       
-                        <asp:TextBox ID="txtIdEjemplar" runat="server" disabled="disabled" ></asp:TextBox>
-                    </div>
-                    <div class="col-4">
-                        <asp:TextBox ID="txtEstado" runat="server"></asp:TextBox>
-                    </div>
-                </div>
-
-             <div class="row align-content-around">
-                    <div class="col-4">
-                        <asp:Label ID="Label11" runat="server" CssClass="fw-bold" Text="Baja: "></asp:Label>
-                    </div>
-                    <div class="col-4">
-                        <asp:Label ID="Label12" runat="server" CssClass="fw-bold" Text="Problema:"></asp:Label>
-                    </div> 
-                </div>
-                <div class="row text-center mb-3">
-                    <div class="col-4">
-                        <asp:CheckBox ID="cbBaja" runat="server" />
-                       
-                    </div>
-                    <div class="col-4">
-                        <asp:TextBox ID="txtProblema" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-4">
-                        <input type="button" id="btnActualizarEjemplar" value="ACTUALIZAR EJEMPLAR" runat="server" />
-                    </div>
-                </div>
-                
-         </div>
-       
-
-
-
 
 
     </form>
