@@ -37,30 +37,7 @@
 
     <script>
 
-        /*
-         * Funciones JQUERY para la carga de la tabla con los libros
-         */
-        //$(document).ready(function () {
-
-        //    $.ajax({
-        //        url: "../..//Controladores/Libros.asmx/RecuperarLibros",
-        //        method: 'post',
-        //        dataType: 'json',
-        //        success: function (data) {
-
-        //            $(data).each(function (index, lib) {
-
-        //                $('#tablaLibros').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Seleccionar Libro</td><td>' + lib.idLibro + '</td><td>'
-        //                    + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
-        //                    + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
-        //                    + lib.editorial + '</td>');
-        //            });
-
-
-
-        //        },
-        //    })
-        //});
+        
 
     </script>
 
@@ -121,6 +98,9 @@
             <asp:Button ID="btnFiltrarLibros" runat="server" Text="Button" OnClick="btnFiltrarLibros_Click" />
             <br />
             <asp:GridView ID="grdLibros" runat="server" class="table table-striped " AllowPaging="True" OnPageIndexChanging="grdLibros_PageIndexChanging" >
+                <Columns>
+                    <asp:HyperLinkField DataNavigateUrlFields="idLibro" DataNavigateUrlFormatString="InfoLibro.aspx?idLibro={0}" HeaderText="Seleccionar Libro:" Text="Seleccionar" />
+                </Columns>
             </asp:GridView>
         </div>
 

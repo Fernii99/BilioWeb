@@ -46,23 +46,85 @@
             var idLibro = valores[1];
 
             $.ajax({
-                url: "../..//Controladores/Libros.asmx/RecuperarEjemplares",
+                url: "../..//Controladores/Ejemplares.asmx/RecuperarEjemplares",
                 method: 'post',
                 data: { idLibro: idLibro },
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data);
                     $(data).each(function (index, lib) {
 
-                        $('#tablaEjemplares').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro + '">Seleccionar Libro</td><td>' + lib.idLibro + '</td><td>'
-                            + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>'
-                            + lib.titulo + '</td><td>' + lib.autor + '</td><td>'
-                            + lib.editorial + '</td>');
+                        $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick="abrirModal(' + lib.idLibro +')">Modificar Ejemplar</td><td>' + lib.idLibro + '</td><td> '
+                            + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
+                            + lib.baja + '</td><td>' + lib.problema + '</td>');
                     });
                 },
-            })
+            });
+
+            $('#btnActualizarEjemplarModal').click(function () {
+                console.log('Click detectado');
+                //var idLibro = $('#txtModalIdLibro').val();
+                //var idEjemplar = $('#txtModalIdEjemplar').val();
+                var idLibro = '0001';
+                var idEjemplar = '1'
+                var estado = 'Disponible';
+                var baja = false;
+                var problema = 'Libro no disponible2';
+                /*var checBoxSi = $('#checBoxModalSi').is(":checked");*/
+                /*var ejemplarBaja =$('#txtModalIdEjemplar').val();*/
+
+                $.ajax({
+                    url: "../../Controladores/Ejemplares.asmx/ActualizarEjemplar",
+                    method: 'post',
+                    data: { idLibro: idLibro, idEjemplar: idEjemplar, estado:estado, baja: baja, problema :problema },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                    },
+                });
+                
+            });
 
         });
+
+        var modal = document.getElementById("exampleModal");
+
+        function abrirModal(idLibro, idEjemplar, fechaRecepcion, estado, baja, problema) {
+
+            $('#txtModalIdLibro').val(idLibro);
+            $('#txtModalIdEjemplar').val(idEjemplar);
+            $('#txtModalFechaRecepcion').val(fechaRecepcion);
+            $('#txtModalIdEjemplar').val(estado);
+            $('#txtModalIdEjemplar').val(baja);
+            $('#txtModalIdEjemplar').val(problema);
+
+
+            $('#exampleModal').modal('show');
+
+        };
+
     </script>
+    <script>
+
+        var modal = document.getElementById("exampleModal");
+
+        function abrirModal(idLibro, idEjemplar, fechaRecepcion, estado, baja, problema) {
+
+            $('#txtModalIdLibro').val(idLibro);
+            $('#txtModalIdEjemplar').val(idEjemplar);
+            $('#txtModalFechaRecepcion').val(fechaRecepcion);
+            $('#txtModalIdEjemplar').val(estado);
+            $('#txtModalIdEjemplar').val(baja);
+            $('#txtModalIdEjemplar').val(problema);
+
+            
+            $('#exampleModal').modal('show');
+
+        };
+        </script>
+    
+
+
 
 </head>
 
@@ -122,13 +184,13 @@
             </div>
             <div class="row text-center mb-3">
                 <div class="col-4">
-                    <asp:Label ID="txtIdLibro" runat="server" Text="a"></asp:Label>
+                    <asp:Label ID="txtIdLibro" runat="server" Text=""></asp:Label>
                 </div>
                 <div class="col-4">
-                    <asp:Label ID="txtCategoria" runat="server" Text="b"></asp:Label>
+                    <asp:Label ID="txtCategoria" runat="server" Text=""></asp:Label>
                 </div>
                 <div class="col-4">
-                    <asp:Label ID="txtISBN" runat="server" Text="c"></asp:Label>
+                    <asp:Label ID="txtISBN" runat="server" Text=""></asp:Label>
                 </div>
             </div>
         </div>
@@ -146,13 +208,13 @@
             </div>
             <div class="row text-center mb-3">
                 <div class="col-4">
-                    <asp:Label ID="txtTitulo" runat="server" Text="Titulo"></asp:Label>
+                    <asp:Label ID="txtTitulo" runat="server" Text=""></asp:Label>
                 </div>
                 <div class="col-4">
-                    <asp:Label ID="txtAutor" runat="server" Text="Autor"></asp:Label>
+                    <asp:Label ID="txtAutor" runat="server" Text=""></asp:Label>
                 </div>
                 <div class="col-4">
-                    <asp:Label ID="txtEditorial" runat="server" Text="Editorial"></asp:Label>
+                    <asp:Label ID="txtEditorial" runat="server" Text=""></asp:Label>
                 </div>
             </div>
         </div>
@@ -162,18 +224,19 @@
                     <asp:Label ID="Label8" CssClass="fw-bold" runat="server" Text="Sinopsis:"></asp:Label>
                 </div>
                 <div>
-                    <asp:Label ID="txtSinopsis" runat="server" Text="Label"></asp:Label>
+                    <asp:Label ID="txtSinopsis" runat="server" Text=""></asp:Label>
                 </div>
             </div>
-        </div>
         </div>
 
         <div style="margin-bottom: 40px; margin-left: 10%; width: 80%">
             <table class="table" id="tablaEjemplares">
                 <thead class="thead-light">
                     <tr>
+                        <th></th>
                         <th>Id Libro</th>
                         <th>Id Ejemplar</th>
+                        <th>Fecha Recepcion</th>
                         <th>Estado</th>
                         <th>Baja</th>
                         <th>Problema</th>
@@ -182,8 +245,79 @@
                 <tbody>
                 </tbody>
             </table>
-            
 
+
+        </div>
+
+
+
+
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="txtTituloModalIdEjemplar">Ejemplar numero: </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <!-- 2 TEXTBOX (ID DEL LIBRO Y EJEMPLAR) -->                        
+                        <div class="row justify-content-center">
+                            <!-- ID DEL LIBRO DENTRO DEL MODAL -->
+                            <div class="col-lg-6">
+                                <label for="exampleInputEmail1">Id Libro:</label>
+                                <input type="email" class="form-control" id="txtModalIdLibro" aria-describedby="emailHelp" placeholder="Enter email" disabled="disabled" />
+                            </div>
+                            <!-- ID DEL EJEMPLAR DENTRO DEL MODAL -->
+                            <div class="col-lg-6">
+                                <label for="exampleInputEmail1">Id Ejemplar:</label>
+                                <input type="email" class="form-control" id="txtModalIdEjemplar" aria-describedby="emailHelp"  disabled="disabled" />
+                            </div>
+                        </div>
+
+
+                        <!-- TEXTBOX (FECHA DE RECEPCION) -->
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-lg-12">
+                                <label for="exampleInputEmail1">Fecha Recepcion:</label>
+                                <input type="email" class="form-control" id="txtModalFechaRecepcion" aria-describedby="emailHelp" placeholder="Enter email" disabled="disabled" />
+                            </div>
+                        </div>
+
+                        <!-- CHECKBOX Y TEXTBOX (LIBRO DISPONIBLE Y PROBLEMA) -->
+                        <div class="row justify-content-center mt-2" >
+                            <div class="col-lg-4">
+                                 <label class="col-lg-12" for="exampleInputEmail1">Libro disponible:</label>
+
+                                <div class="form-check d-inline-block">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="checBoxModalSi" />
+                                    <label class="form-check-label" for="flexRadioDefault1"> Si </label>
+                                </div>
+
+                                <div class="form-check d-inline-block">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="checBoxModalNo" />
+                                    <label class="form-check-label" for="flexRadioDefault2"> No </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <label for="exampleInputEmail1">Problema:</label>
+                                <input type="email" class="form-control" id="txtModalProblema" aria-describedby="modalProblema" placeholder="" disabled="disabled" />
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelarModal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnActualizarEjemplarModal">Actualizar Ejemplar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

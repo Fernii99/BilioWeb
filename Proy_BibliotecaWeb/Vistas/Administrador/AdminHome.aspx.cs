@@ -23,11 +23,7 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             {
                 txtNombreUsuario.Text = Session["nombre"].ToString() + " " + Session["apellido"].ToString();
             }
-            cargarLibros();
-        }
-
-        private void cargarLibros()
-        {
+            //cargarLibros();
             String strConexion = ConfigurationManager.ConnectionStrings["BiblioWeb"].ConnectionString;
             List<Clases.Libro> listaLibros = new List<Clases.Libro>();
 
@@ -37,7 +33,7 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             SqlCommand cmdRecuperarLibros = new SqlCommand();
             cmdRecuperarLibros.Connection = con;
 
-            
+
 
             SqlDataReader lectorLibros;
             DataTable dtLibrosRecuperados = new DataTable();
@@ -48,16 +44,19 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
 
             con.Open();
 
-            
-            
-
             lectorLibros = cmdRecuperarLibros.ExecuteReader();
 
             dtLibrosRecuperados.Load(lectorLibros);
 
             grdLibros.DataSource = dtLibrosRecuperados;
-            
+            con.Close();
+
             grdLibros.DataBind();
+        }
+
+        private void cargarLibros()
+        {
+            
             
         }
 
