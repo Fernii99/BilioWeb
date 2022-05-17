@@ -36,11 +36,17 @@
 
 
     <script>
+
         /*
-         * Funciones JQUERY para la carga de la tabla con los libros
+         * Funciones JQUERY 
          */
         $(document).ready(function () {
 
+
+            /* 
+            * Función AJAX para cargar la tabla con la informacion de los ejemplares que hay del libro seleccionado 
+            * la tabla generada automaticamente con un bucle agrega una boton que despliega un modal con la informacion del libro
+            */
             var ParametrosURL = location.search.substring(1);
             var valores = ParametrosURL.split("=");
             var idLibro = valores[1];
@@ -51,79 +57,87 @@
                 data: { idLibro: idLibro },
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+
+
                     $(data).each(function (index, lib) {
 
-                        $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick="abrirModal(' + lib.idLibro +')">Modificar Ejemplar</td><td>' + lib.idLibro + '</td><td> '
+                        $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" value="Actualizar Ejemplar" data-toggle="modal" data-target="#exampleModal" onclick=" abrirModal(  )"/></td><td>' + lib.idLibro + '</td><td> '
                             + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
                             + lib.baja + '</td><td>' + lib.problema + '</td>');
                     });
                 },
             });
 
+            /*
+             * Funcion Jquery que detecta el click del modal para actualizar la informacion del ejemplar
+             * 
+             */
             $('#btnActualizarEjemplarModal').click(function () {
-                console.log('Click detectado');
-                //var idLibro = $('#txtModalIdLibro').val();
-                //var idEjemplar = $('#txtModalIdEjemplar').val();
-                var idLibro = '0001';
-                var idEjemplar = '1'
-                var estado = 'Disponible';
-                var baja = false;
-                var problema = 'Libro no disponible2';
-                /*var checBoxSi = $('#checBoxModalSi').is(":checked");*/
-                /*var ejemplarBaja =$('#txtModalIdEjemplar').val();*/
+
+
 
                 $.ajax({
                     url: "../../Controladores/Ejemplares.asmx/ActualizarEjemplar",
                     method: 'post',
-                    data: { idLibro: idLibro, idEjemplar: idEjemplar, estado:estado, baja: baja, problema :problema },
+                    data: { idLibro: idLibro, idEjemplar: idEjemplar, estado: estado, baja: baja, problema: problema },
                     dataType: 'json',
                     success: function (data) {
                         console.log(data);
                     },
                 });
-                
+
+            });
+
+            $('#btnAgregarEjemplar').click(function () {
+                var idLibro = $('#txtAgregarEjemplarIdLIbro').val();
+                var estado = $('#ddlAgregarEjemplarEstado').val();
+                var problema = $('#txtAgregarEjemplarProblema').val();
+                var baja;
+                if ($('#flexRadioBajaSi').is(':checked')) {
+                    alert("FlexBoxSi  Checked");
+                     baja = 'True';
+                } else {
+                     baja = 'False';
+                }
+
+                $.ajax({
+                    url: "../../Controladores/Ejemplares.asmx/InsertarEjemplar",
+                    method: 'post',
+                    dataType: 'json',
+                    data: { idLibro: idLibro, estado: estado, baja: baja, problema: problema },
+                    success: function (data) {
+                        alert('success');
+                    },
+                    error: function (data) {
+                        alert('error');
+                    }
+                });
             });
 
         });
 
-        var modal = document.getElementById("exampleModal");
-
-        function abrirModal(idLibro, idEjemplar, fechaRecepcion, estado, baja, problema) {
-
-            $('#txtModalIdLibro').val(idLibro);
-            $('#txtModalIdEjemplar').val(idEjemplar);
-            $('#txtModalFechaRecepcion').val(fechaRecepcion);
-            $('#txtModalIdEjemplar').val(estado);
-            $('#txtModalIdEjemplar').val(baja);
-            $('#txtModalIdEjemplar').val(problema);
 
 
-            $('#exampleModal').modal('show');
 
-        };
+
+
 
     </script>
     <script>
 
         var modal = document.getElementById("exampleModal");
+        var modal = document.getElementById("agregarEjemplarModal");
 
-        function abrirModal(idLibro, idEjemplar, fechaRecepcion, estado, baja, problema) {
 
-            $('#txtModalIdLibro').val(idLibro);
-            $('#txtModalIdEjemplar').val(idEjemplar);
-            $('#txtModalFechaRecepcion').val(fechaRecepcion);
-            $('#txtModalIdEjemplar').val(estado);
-            $('#txtModalIdEjemplar').val(baja);
-            $('#txtModalIdEjemplar').val(problema);
 
-            
+
+        function abrirModal() {
+           
             $('#exampleModal').modal('show');
 
         };
-        </script>
-    
 
+    </script>
 
 
 </head>
@@ -247,8 +261,13 @@
             </table>
 
 
+            <input type="button" class="btn btn-primary" value="Agregar nuevo ejemplar" data-toggle="modal" data-target="agregarEjemplarModal" onclick="abrirAgregarEjemplar()" />
         </div>
 
+
+        <!-- ***************************************************************************************************************************** -->
+        <!-- **************************** MODAL PARA LA ACTUALIZACION DE EL EJEMPLAR SOLUCIONADO ***************************************** -->
+        <!-- ***************************************************************************************************************************** -->
 
 
 
@@ -265,17 +284,17 @@
 
 
                     <div class="modal-body">
-                        <!-- 2 TEXTBOX (ID DEL LIBRO Y EJEMPLAR) -->                        
+                        <!-- 2 TEXTBOX (ID DEL LIBRO Y EJEMPLAR) -->
                         <div class="row justify-content-center">
                             <!-- ID DEL LIBRO DENTRO DEL MODAL -->
                             <div class="col-lg-6">
                                 <label for="exampleInputEmail1">Id Libro:</label>
-                                <input type="email" class="form-control" id="txtModalIdLibro" aria-describedby="emailHelp" placeholder="Enter email" disabled="disabled" />
+                                <input class="form-control" id="txtModalIdLibro" aria-describedby="idEjemplar" disabled="disabled" />
                             </div>
                             <!-- ID DEL EJEMPLAR DENTRO DEL MODAL -->
                             <div class="col-lg-6">
                                 <label for="exampleInputEmail1">Id Ejemplar:</label>
-                                <input type="email" class="form-control" id="txtModalIdEjemplar" aria-describedby="emailHelp"  disabled="disabled" />
+                                <input type="email" class="form-control" id="txtModalIdEjemplar" aria-describedby="emailHelp" disabled="disabled" />
                             </div>
                         </div>
 
@@ -289,23 +308,23 @@
                         </div>
 
                         <!-- CHECKBOX Y TEXTBOX (LIBRO DISPONIBLE Y PROBLEMA) -->
-                        <div class="row justify-content-center mt-2" >
+                        <div class="row justify-content-center mt-2">
                             <div class="col-lg-4">
-                                 <label class="col-lg-12" for="exampleInputEmail1">Libro disponible:</label>
+                                <label class="col-lg-12" for="exampleInputEmail1">Libro disponible:</label>
 
                                 <div class="form-check d-inline-block">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="checBoxModalSi" />
-                                    <label class="form-check-label" for="flexRadioDefault1"> Si </label>
+                                    <label class="form-check-label" for="flexRadioDefault1">Si </label>
                                 </div>
 
                                 <div class="form-check d-inline-block">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="checBoxModalNo" />
-                                    <label class="form-check-label" for="flexRadioDefault2"> No </label>
+                                    <label class="form-check-label" for="flexRadioDefault2">No </label>
                                 </div>
                             </div>
                             <div class="col-lg-8">
                                 <label for="exampleInputEmail1">Problema:</label>
-                                <input type="email" class="form-control" id="txtModalProblema" aria-describedby="modalProblema" placeholder="" disabled="disabled" />
+                                <input type="email" class="form-control" id="txtModalProblema" aria-describedby="modalProblema" placeholder="" />
                             </div>
 
                         </div>
@@ -321,6 +340,50 @@
         </div>
 
 
+        <!-- ***************************************************************************************************************************** -->
+        <!-- ****************************FORMULARIO  PARA LA INSERCION UN NUEVO EJEMPLERA A LA BASE DE DATOS *********************************** -->
+        <!-- ***************************************************************************************************************************** -->
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col">
+                    <asp:Label ID="Label7" runat="server" Text="Id del Libro: "></asp:Label>
+                    <asp:TextBox ID="txtAgregarEjemplarIdLIbro" class="form-control" aria-label="First name" runat="server"></asp:TextBox>
+                    <br />
+
+                    <asp:DropDownList ID="ddlAgregarEjemplarEstado" runat="server">
+                        <asp:ListItem Selected="True">Selecciona estado del libro</asp:ListItem>
+                        <asp:ListItem>Disponible</asp:ListItem>
+                        <asp:ListItem>No Disponible</asp:ListItem>
+                    </asp:DropDownList>
+
+                    <br />
+
+                    <!-- INICIO RADIOS LIBRO EN BAJA -->
+                    <asp:Label ID="Label10" runat="server" Text="Baja:"></asp:Label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioBajaSi" />
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Libro disponible
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioBajaNo" checked="checked" />
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Libro no disponible
+                        </label>
+                    </div>
+                    <br />
+                    <!-- FIN RADIOS LIBRO EN BAJA -->
+
+                    <asp:Label ID="Label11" runat="server" Text="Problema:"></asp:Label>
+                    <input type="text" id="txtAgregarEjemplarProblema" class="form-control" placeholder="First name" aria-label="First name" runat="server"><br />
+                    <br />
+                </div>
+                
+            </div>
+             <input type="button" id="btnAgregarEjemplar" value="ACTUALIZAR EJEMPLAR" runat="server" />
+          
+        </div>
     </form>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -130,5 +130,59 @@ namespace Proy_BibliotecaWeb.Controladores
             Context.Response.Write("Actualizacion Correcta");
         }
 
+        [WebMethod]
+        public void InsertarEjemplar()
+        {
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = strConexion;
+
+            SqlCommand cmdInsertarEjemplar = new SqlCommand();
+            cmdInsertarEjemplar.Connection = con;
+
+            cmdInsertarEjemplar.CommandType = CommandType.StoredProcedure;
+            cmdInsertarEjemplar.CommandText = "pr_insertarEjemplar";
+
+
+            SqlParameter prmidLibro = new SqlParameter();
+            prmidLibro.ParameterName = "@p_idLibro";
+            prmidLibro.SqlDbType = SqlDbType.Char;
+            prmidLibro.Size = 4;
+
+            SqlParameter prmestado = new SqlParameter();
+            prmestado.ParameterName = "@p_estado";
+            prmestado.SqlDbType = SqlDbType.Char;
+            prmestado.Size = 13;
+
+            SqlParameter prmBaja = new SqlParameter();
+            prmBaja.ParameterName = "@p_baja";
+            prmBaja.SqlDbType = SqlDbType.Bit;
+
+            SqlParameter prmProblema = new SqlParameter();
+            prmProblema.ParameterName = "@p_problema";
+            prmProblema.SqlDbType = SqlDbType.VarChar;
+            prmProblema.Size = 300;
+
+            cmdInsertarEjemplar.Parameters.Add(prmidLibro);
+            cmdInsertarEjemplar.Parameters.Add(prmestado);
+            cmdInsertarEjemplar.Parameters.Add(prmBaja);
+            cmdInsertarEjemplar.Parameters.Add(prmProblema);
+
+            con.Open();
+
+
+            cmdInsertarEjemplar.Parameters[0].Value = Context.Request.Params["idLibro"].ToString();
+            cmdInsertarEjemplar.Parameters[1].Value = Context.Request.Params["estado"].ToString();
+            cmdInsertarEjemplar.Parameters[2].Value = Context.Request.Params["baja"].ToString();
+            cmdInsertarEjemplar.Parameters[3].Value = Context.Request.Params["problema"].ToString();
+
+            cmdInsertarEjemplar.ExecuteNonQuery();
+
+            con.Close();
+
+            Context.Response.Write("Actualizacion Correcta");
+
+        }
+
+
     }
 }
