@@ -177,6 +177,15 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         protected global::System.Web.UI.WebControls.TextBox txtAgregarEjemplarIdLIbro;
 
         /// <summary>
+        /// Control Label9.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label9;
+
+        /// <summary>
         /// Control ddlAgregarEjemplarEstado.
         /// </summary>
         /// <remarks>
@@ -184,15 +193,6 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlAgregarEjemplarEstado;
-
-        /// <summary>
-        /// Control Label10.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
 
         /// <summary>
         /// Control Label11.

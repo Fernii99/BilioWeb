@@ -187,6 +187,7 @@
     <Content Include="assets\vendor\php-email-form\validate.js" />
     <Content Include="assets\vendor\swiper\swiper-bundle.min.css" />
     <Content Include="assets\vendor\swiper\swiper-bundle.min.js" />
+    <None Include="Connected Services\ServiciosPrestamos\Prestamos.wsdl" />
     <None Include="Connected Services\ServiciosEjemplares\Ejemplares.wsdl" />
     <None Include="Connected Services\ServicioLibros\Libros.disco" />
     <None Include="Connected Services\ServicioLibros\configuration91.svcinfo" />
@@ -198,6 +199,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\ServiciosPrestamos\Prestamos.disco" />
+    <None Include="Connected Services\ServiciosPrestamos\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiciosPrestamos\configuration.svcinfo" />
+    <None Include="Connected Services\ServiciosPrestamos\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Connected Services\ServicioLibros\Proy_BibliotecaWeb.ServicioLibros.HelloWorldResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -206,6 +214,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Controladores\Ejemplares.asmx" />
+    <Content Include="Controladores\Prestamos.asmx" />
     <Content Include="HeroBiz\blog-details.html" />
     <Content Include="HeroBiz\blog.html" />
     <Content Include="HeroBiz\changelog.txt" />
@@ -217,6 +226,7 @@
     <Content Include="Vistas\Administrador\InfoLibro.aspx" />
     <Content Include="Controladores\Libros.asmx" />
     <Content Include="Vistas\Administrador\AdminHome.aspx" />
+    <Content Include="Vistas\Administrador\Prestamos.aspx" />
     <Content Include="Vistas\index.html" />
     <Content Include="HeroBiz\inner-page.html" />
     <Content Include="HeroBiz\portfolio-details.html" />
@@ -237,6 +247,12 @@
   <ItemGroup>
     <Compile Include="Clases\Ejemplar.cs" />
     <Compile Include="Clases\Libro.cs" />
+    <Compile Include="Clases\Prestamo.cs" />
+    <Compile Include="Connected Services\ServiciosPrestamos\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ServiciosEjemplares\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,6 +265,10 @@
     </Compile>
     <Compile Include="Controladores\Ejemplares.asmx.cs">
       <DependentUpon>Ejemplares.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controladores\Prestamos.asmx.cs">
+      <DependentUpon>Prestamos.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Vistas\Administrador\InfoLibro.aspx.cs">
@@ -268,6 +288,13 @@
     </Compile>
     <Compile Include="Vistas\Administrador\AdminHome.aspx.designer.cs">
       <DependentUpon>AdminHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Administrador\Prestamos.aspx.cs">
+      <DependentUpon>Prestamos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Administrador\Prestamos.aspx.designer.cs">
+      <DependentUpon>Prestamos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\AdminMaster\AdminNav.Master.cs">
       <DependentUpon>AdminNav.Master</DependentUpon>
@@ -349,6 +376,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiciosPrestamos\" />
     <WCFMetadataStorage Include="Connected Services\ServiciosEjemplares\" />
     <WCFMetadataStorage Include="Connected Services\ServicioLibros\" />
   </ItemGroup>

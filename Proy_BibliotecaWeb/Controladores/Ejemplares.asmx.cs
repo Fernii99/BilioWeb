@@ -51,6 +51,8 @@ namespace Proy_BibliotecaWeb.Controladores
 
             lectorEjemplares = cmdRecuperarLibros.ExecuteReader();
 
+            con.Close();
+
             while (lectorEjemplares.Read())
             {
 

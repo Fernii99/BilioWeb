@@ -90,14 +90,15 @@
 
             $('#btnAgregarEjemplar').click(function () {
                 var idLibro = $('#txtAgregarEjemplarIdLIbro').val();
-                var estado = $('#ddlAgregarEjemplarEstado').val();
                 var problema = $('#txtAgregarEjemplarProblema').val();
+                var estado
                 var baja;
-                if ($('#flexRadioBajaSi').is(':checked')) {
-                    alert("FlexBoxSi  Checked");
-                     baja = 'True';
+                if ($('#ddlAgregarEjemplarEstado').val() == "Disponible") {
+                    estado = "Disponible";
+                    baja = "False";
                 } else {
-                     baja = 'False';
+                    estado = "No Disponible";
+                    baja = "True";
                 }
 
                 $.ajax({
@@ -106,10 +107,10 @@
                     dataType: 'json',
                     data: { idLibro: idLibro, estado: estado, baja: baja, problema: problema },
                     success: function (data) {
-                        alert('success');
+                        alert(JSON.stringify(data));
                     },
                     error: function (data) {
-                        alert('error');
+                        alert(JSON.stringify(data));
                     }
                 });
             });
@@ -345,38 +346,24 @@
         <!-- ***************************************************************************************************************************** -->
         <div class="container mb-5">
             <div class="row">
-                <div class="col">
+                <div class="col-sm-4">
                     <asp:Label ID="Label7" runat="server" Text="Id del Libro: "></asp:Label>
-                    <asp:TextBox ID="txtAgregarEjemplarIdLIbro" class="form-control" aria-label="First name" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtAgregarEjemplarIdLIbro" class="form-control" aria-label="First name" runat="server" disabled="disabled"></asp:TextBox>
                     <br />
-
+                </div>
+                <div class="col-sm-3 ">
+                    <asp:Label ID="Label9" runat="server" Text="Estado del libro:"></asp:Label><br />
                     <asp:DropDownList ID="ddlAgregarEjemplarEstado" runat="server">
                         <asp:ListItem Selected="True">Selecciona estado del libro</asp:ListItem>
                         <asp:ListItem>Disponible</asp:ListItem>
                         <asp:ListItem>No Disponible</asp:ListItem>
-                    </asp:DropDownList>
-
+                    </asp:DropDownList><br />
+               
                     <br />
-
-                    <!-- INICIO RADIOS LIBRO EN BAJA -->
-                    <asp:Label ID="Label10" runat="server" Text="Baja:"></asp:Label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioBajaSi" />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Libro disponible
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioBajaNo" checked="checked" />
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Libro no disponible
-                        </label>
-                    </div>
-                    <br />
-                    <!-- FIN RADIOS LIBRO EN BAJA -->
-
+                </div>
+                <div class="col-sm-4 ">
                     <asp:Label ID="Label11" runat="server" Text="Problema:"></asp:Label>
-                    <input type="text" id="txtAgregarEjemplarProblema" class="form-control" placeholder="First name" aria-label="First name" runat="server"><br />
+                    <input type="text" id="txtAgregarEjemplarProblema" class="form-control" placeholder="First name" aria-label="First name" runat="server"/><br />
                     <br />
                 </div>
                 

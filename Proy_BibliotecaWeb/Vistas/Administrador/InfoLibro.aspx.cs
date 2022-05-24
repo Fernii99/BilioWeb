@@ -71,7 +71,7 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             {
 
                 txtTituloLibro.Text = lector[3].ToString();
-
+                txtAgregarEjemplarIdLIbro.Text = lector[0].ToString();
                 txtIdLibro.Text = lector[0].ToString();
                 txtCategoria.Text = lector[1].ToString();
                 txtISBN.Text = lector[2].ToString();
