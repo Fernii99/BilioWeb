@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminHome.aspx.cs" Inherits="Proy_BibliotecaWeb.Vistas.Administrador.AdminHome" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RealizarPrestamo.aspx.cs" Inherits="Proy_BibliotecaWeb.Vistas.Administrador.RealizarPrestamo" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Home Administrador</title>
+    <title>Realizar Prestamos</title>
 
     <!-- Favicons -->
     <link href="../../assets/img/favicon.png" rel="icon" />
@@ -33,20 +33,10 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-
-    <script>
-
-        
-
-    </script>
-
 </head>
-
 <body>
+    <form id="form1" runat="server">
 
-    <form runat="server">
-        <!-- ======= Header ======= -->
         <header id="header" class="header fixed-top" data-scrollto-offset="0">
             <div class="container-fluid d-flex align-items-center justify-content-between">
 
@@ -56,7 +46,7 @@
                     <h1>Biblio Web:</h1>
                 </a>
 
-              <nav id="navbar" class="navbar">
+               <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
                         <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
@@ -66,58 +56,42 @@
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
                 </nav>
                 <!-- .navbar -->
-
-
-                <asp:Button ID="btnCerrarSesion" class="btn-getstarted scrollto" runat="server" Text="Cerrar Sesion" OnClick="btnCerrarSesion_Click" />
-
+                <asp:Button ID="btnCerrarSesion" class="btn-getstarted scrollto" runat="server" Text="Cerrar Sesion" />
             </div>
         </header>
-        <!-- End Header -->
+
 
         <section id="hero-animated" class="hero-animated d-flex align-items-center">
             <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
-                <h2>BIENVENIDO AL APLICATIVO:  <span>
-                    <asp:Label ID="txtNombreUsuario" runat="server" Text="Label"></asp:Label></span></h2>
+                <h2>
+                    <asp:Label ID="txtTituloLibro" runat="server" Text="Realizar Prestamo"></asp:Label></h2>
             </div>
         </section>
 
+        <div class="container col-sm-4">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Codigo identificacion del libro</label>
+                <input type="email" class="form-control" id="txtCodigoLibro" aria-describedby="emailHelp" placeholder="Id Libro"/>
+                
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Número del ejemplar</label>
+               
+                <asp:TextBox ID="txtNumeroEjemplar" class="form-control" runat="server" Text='' />  
 
-        <!-- Tabla con toda la informacion de los libros -->
-        <div class="container justify-content-center col-lg-10">
-            <h1 class="display-3 mt-5 mb-4">Libros disponibles en la base de datos:</h1>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Fecha del prestamo:</label>
+                <asp:TextBox ID="txtFechaPrestamo" class="form-control" runat="server" Text='<%# Eval(DateTime.Now.ToString()) %>' />  
 
-
-
-
-
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Número del ejemplar</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+            </div> 
         </div>
-        <div class="container col-lg-12 justify-content-center">
-            <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por titulo:" style="margin-right:10px;"></asp:Label><asp:TextBox ID="txtFiltro" runat="server" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
-            <asp:Button ID="btnFiltrarLibros" runat="server" Text="Button" OnClick="btnFiltrarLibros_Click" />
-            <br />
-            <asp:GridView ID="grdLibros" runat="server" class="table table-striped " AllowPaging="True" OnPageIndexChanging="grdLibros_PageIndexChanging" >
-                <Columns>
-                    <asp:HyperLinkField DataNavigateUrlFields="idLibro" DataNavigateUrlFormatString="InfoLibro.aspx?idLibro={0}" HeaderText="Seleccionar Libro:" Text="Seleccionar" />
-                </Columns>
-            </asp:GridView>
-        </div>
-
-
-
-
-        
-        <!-- Fin tabla libros que hay en la base de datos -->
-
-
-
-
 
     </form>
-
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <div id="preloader"></div>
-
     <!-- Vendor JS Files -->
     <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/vendor/aos/aos.js"></script>
@@ -128,8 +102,5 @@
 
     <!-- Template Main JS File -->
     <script src="../../assets/js/main.js"></script>
-
 </body>
 </html>
-
-

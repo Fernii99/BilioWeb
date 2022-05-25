@@ -158,12 +158,10 @@
 
                 <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto" href="index.html#about">Realizar Prestamo</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#services">Prestamos</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#portfolio">Realizar Devolucion</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#team">Ampliar Devolucion</a></li>
-                        <li><a href="blog.html">Agregar Ejemplar</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
+                        <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
+                        <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
+                        <li><a class="nav-link scrollto" href="RealizarPrestamo.aspx">Realizar Prestamos</a></li>
+                        <li><a class="nav-link scrollto" href="AmpliarPrestamo.aspx">Ampliar Prestamo</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
                 </nav>

@@ -47,13 +47,11 @@
                             $('#tablaPrestamos tbody').empty();
 
                             $(data).each(function (index, pres) {
-
                                 if (pres.devuelto == false) {
                                     $('#tablaPrestamos').append('<tr><td><input type="button" class="btn btn-primary align-self-end " style="margin-right: 10px;" onClick="DevolverPrestamo(' + pres.idPrestamo + ')" value="Realizar devolución" />' + '' + '</td><td>' + pres.idPrestamo + '</td><td> '
                                         + pres.idLibro + '</td><td>' + pres.idEjemplar + '</td><td>' + pres.idUsuario + '</td><td>'
                                         + pres.fechaPrestamo + '</td><td>' + pres.fechaDevolucion + '</td><td>No</td></tr>');
                                 } else {
-
                                     $('#tablaPrestamos').append('<tr><td>' + '' + '</td><td>' + pres.idPrestamo + '</td><td> '
                                         + pres.idLibro + '</td><td>' + pres.idEjemplar + '</td><td>' + pres.idUsuario + '</td><td>'
                                         + pres.fechaPrestamo + '</td><td>' + pres.fechaDevolucion + '</td><td>Si</td></tr>');
@@ -129,11 +127,11 @@
                         alert('devolucion correcta');
                     },
                     error: function (data) {
-                        
+
                     }
                 });
-            } 
-            
+            }
+
         }
     </script>
 
@@ -151,13 +149,12 @@
                     <h1>Biblio Web:</h1>
                 </a>
 
-                <nav id="navbar" class="navbar">
+               <nav id="navbar" class="navbar">
                     <ul>
-                        <li><a class="nav-link scrollto" href="index.html#about">Realizar Prestamo</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#services">Prestamos</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#portfolio">Realizar Devolucion</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#team">Ampliar Prestamo</a></li>
-                        <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
+                        <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
+                        <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
+                        <li><a class="nav-link scrollto" href="RealizarPrestamo.aspx">Realizar Prestamos</a></li>
+                        <li><a class="nav-link scrollto" href="AmpliarPrestamo.aspx">Ampliar Prestamo</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
                 </nav>
@@ -225,8 +222,14 @@
                 <tbody>
                 </tbody>
             </table>
-                 </div>
-</form>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end"  id="NavegadorPrestamos">
+                   
+                </ul>
+            </nav>
+        </div>
+    </form>
 
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -227,6 +227,7 @@
     <Content Include="Controladores\Libros.asmx" />
     <Content Include="Vistas\Administrador\AdminHome.aspx" />
     <Content Include="Vistas\Administrador\Prestamos.aspx" />
+    <Content Include="Vistas\Administrador\RealizarPrestamo.aspx" />
     <Content Include="Vistas\index.html" />
     <Content Include="HeroBiz\inner-page.html" />
     <Content Include="HeroBiz\portfolio-details.html" />
@@ -295,6 +296,13 @@
     </Compile>
     <Compile Include="Vistas\Administrador\Prestamos.aspx.designer.cs">
       <DependentUpon>Prestamos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Administrador\RealizarPrestamo.aspx.cs">
+      <DependentUpon>RealizarPrestamo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Administrador\RealizarPrestamo.aspx.designer.cs">
+      <DependentUpon>RealizarPrestamo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\AdminMaster\AdminNav.Master.cs">
       <DependentUpon>AdminNav.Master</DependentUpon>
