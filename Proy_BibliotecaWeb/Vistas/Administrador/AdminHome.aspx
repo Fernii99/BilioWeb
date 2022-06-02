@@ -34,11 +34,49 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-
     <script>
+        $(document).ready(function () {
 
-        
 
+
+            $.ajax({
+                url: "../..//Controladores/Libros.asmx/RecuperarLibros",
+                method: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $(data).each(function (index, lib) {
+                        $('#tablaLibros').append('<tr><td>' + lib.idLibro + '</td><td> '
+                            + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>' + lib.titulo + '</td><td>'
+                            + lib.Autor + '</td><td>' + lib.editorial + '</td></tr>');
+                    });
+                },
+                error: function (data) {
+                    alert('error');
+                }
+            });
+
+            $("#txtTituloLibro").keyup(function () {
+                $.ajax({
+                    url: "../..//Controladores/Libros.asmx/RecuperarLibros",
+                    method: 'post',
+                    dataType: 'json',
+                    data: { titulo: $('#txtTituloLibro').val() },
+                    success: function (data) {
+                        $('#tablaLibros tbody').empty();
+                        $(data).each(function (index, lib) {
+                            $('#tablaLibros').append('<tr><td><a href="InfoLibro.aspx?idLibro=' + lib.idLibro  + '">Ver Libro</a><td>' + lib.idLibro + '</td><td>' + lib.idLibro + '</td><td> '
+                                + lib.categoria + '</td><td>' + lib.ISBN + '</td><td>' + lib.titulo + '</td><td>'
+                                + lib.Autor + '</td><td>' + lib.editorial + '</td></tr>');
+                        });
+                    },
+                    error: function (data) {
+                        alert('error');
+                    }
+                });
+            });
+
+        });
     </script>
 
 </head>
@@ -56,7 +94,7 @@
                     <h1>Biblio Web:</h1>
                 </a>
 
-              <nav id="navbar" class="navbar">
+                <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
                         <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
@@ -72,6 +110,7 @@
 
             </div>
         </header>
+
         <!-- End Header -->
 
         <section id="hero-animated" class="hero-animated d-flex align-items-center">
@@ -85,33 +124,28 @@
         <!-- Tabla con toda la informacion de los libros -->
         <div class="container justify-content-center col-lg-10">
             <h1 class="display-3 mt-5 mb-4">Libros disponibles en la base de datos:</h1>
-
-
-
-
-
         </div>
-        <div class="container col-lg-12 justify-content-center">
-            <asp:Label ID="lblFiltro" runat="server" Text="Filtrar por titulo:" style="margin-right:10px;"></asp:Label><asp:TextBox ID="txtFiltro" runat="server" OnTextChanged="txtFiltro_TextChanged"></asp:TextBox>
-            <asp:Button ID="btnFiltrarLibros" runat="server" Text="Button" OnClick="btnFiltrarLibros_Click" />
-            <br />
-            <asp:GridView ID="grdLibros" runat="server" class="table table-striped " AllowPaging="True" OnPageIndexChanging="grdLibros_PageIndexChanging" >
-                <Columns>
-                    <asp:HyperLinkField DataNavigateUrlFields="idLibro" DataNavigateUrlFormatString="InfoLibro.aspx?idLibro={0}" HeaderText="Seleccionar Libro:" Text="Seleccionar" />
-                </Columns>
-            </asp:GridView>
-        </div>
-
-
-
 
         
-        <!-- Fin tabla libros que hay en la base de datos -->
 
-
-
-
-
+        <div class="container col-lg-12 justify-content-center">
+            <input type="text" class="form-control" id="txtTituloLibro" placeholder="Titulo del Libro" /><br />
+            <table id="tablaLibros" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Ver Libro:</th>
+                    <th scope="col">id Libro:</th>
+                    <th scope="col">Categoria:</th>
+                    <th scope="col">ISBN:</th>
+                    <th scope="col">Titulo:</th>
+                    <th scope="col">Autor:</th>
+                    <th scope="col">Editorial:</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        </div>
     </form>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

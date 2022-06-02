@@ -12,6 +12,12 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            txtFechaPrestamo.Text = DateTime.Today.ToString("yyyy/dd/MM");
+            txtFechaPrestamo.DataBind();
+
+            txtFechaDevolucion.Text = DateTime.Today.AddDays(14).ToString("yyyy/dd/MM");
+            txtFechaPrestamo.DataBind();
+
         }
     }
 }

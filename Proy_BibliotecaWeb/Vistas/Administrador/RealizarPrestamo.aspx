@@ -30,8 +30,37 @@
     <!-- Template Main CSS File -->
     <link href="../../assets/css/main.css" rel="stylesheet" />
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#btnRealizarPrestamo').click(function () {
+                var idLibro = $('#txtCodigoLibro').val();
+                var idEjemplar = $('#txtCodigoEjemplar').val();
+                var idUsuario = $('#txtIdUsuario').val();
+                var fechaPrestamo = $('#txtFechaPrestamo').val();
+                var fechaDevolucion = $('#txtFechaDevolucion').val();
+                console.log(idLibro, idEjemplar, idUsuario, fechaPrestamo, fechaDevolucion);
+
+                $.ajax({
+                    url: "../..//Controladores/Prestamos.asmx/RealizarPrestamo",
+                    method: 'post',
+                    dataType: 'json',
+                    data: {idLibro:idLibro, idEjemplar:idEjemplar, idUsuario:idUsuario, fechaPrestamo:fechaPrestamo, fechaDevolucion:fechaDevolucion },
+                    success: function (data) {
+                        alert(JSON.stringify(data));
+                    },
+                    error: function (data) {
+                       
+                        alert(JSON.stringify(data["responseText"]));
+                    }
+                });
+            });
+
+        });
+
+    </script>
 
 </head>
 <body>
@@ -46,7 +75,7 @@
                     <h1>Biblio Web:</h1>
                 </a>
 
-               <nav id="navbar" class="navbar">
+                <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
                         <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
@@ -70,26 +99,35 @@
 
         <div class="container col-sm-4">
             <div class="form-group">
-                <label for="exampleInputEmail1">Codigo identificacion del libro</label>
-                <input type="email" class="form-control" id="txtCodigoLibro" aria-describedby="emailHelp" placeholder="Id Libro"/>
-                
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Número del ejemplar</label>
-               
-                <asp:TextBox ID="txtNumeroEjemplar" class="form-control" runat="server" Text='' />  
+                <label >Codigo identificacion del libro</label>
+                <input type="text" class="form-control" id="txtCodigoLibro" placeholder="Id Libro:" />
 
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Fecha del prestamo:</label>
-                <asp:TextBox ID="txtFechaPrestamo" class="form-control" runat="server" Text='<%# Eval(DateTime.Now.ToString()) %>' />  
-
+                <label >Número del ejemplar</label>
+                <input type="text" class="form-control" id="txtCodigoEjemplar" placeholder="Id Ejemplar:" />
             </div>
+
             <div class="form-group">
-                <label for="exampleInputPassword1">Número del ejemplar</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
-            </div> 
+                <label >Número de Usuario:</label>
+                <input type="text" class="form-control" id="txtIdUsuario" placeholder="Codigo identificación del usuario" />
+            </div>
+
+            <div class="form-group">
+                <label >Fecha del prestamo:</label>
+                <asp:TextBox ID="txtFechaPrestamo" class="form-control" runat="server" disabled="disabled" />
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Fecha de la devolución:</label>
+                <asp:TextBox ID="txtFechaDevolucion" class="form-control" runat="server" disabled="disabled" />
+            </div>
+            <br />
+            <div>
+                <input type="button" class="btn btn-secondary" id="btnRealizarPrestamo" value=" Realizar Prestamo" />
+            </div>
         </div>
+
 
     </form>
     <!-- Vendor JS Files -->

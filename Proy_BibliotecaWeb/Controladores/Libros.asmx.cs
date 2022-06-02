@@ -43,12 +43,20 @@ namespace Proy_BibliotecaWeb.SeriviciosWeb
 
             SqlDataReader lectorLibros;
 
-            
+            SqlParameter prmTitutloLibro = new SqlParameter();
+            prmTitutloLibro.SqlDbType = SqlDbType.VarChar;
+            prmTitutloLibro.ParameterName = "@p_titulo";
+            prmTitutloLibro.Size = 100;
 
             cmdRecuperarLibros.CommandType = CommandType.StoredProcedure;
             cmdRecuperarLibros.CommandText = "pr_RecuperarLibros";
 
+            cmdRecuperarLibros.Parameters.Add(prmTitutloLibro);
+
             con.Open();
+
+            cmdRecuperarLibros.Parameters[0].Value = Context.Request.Params["titulo"];
+
             lectorLibros = cmdRecuperarLibros.ExecuteReader();
 
             while (lectorLibros.Read())
@@ -56,9 +64,8 @@ namespace Proy_BibliotecaWeb.SeriviciosWeb
 
                 Clases.Libro objLibro = new Clases.Libro();
 
-
-                objLibro.idLibro = (char)lectorLibros["idLibro"];
-                objLibro.categoria = (char)lectorLibros["Categoria"];
+                objLibro.idLibro = lectorLibros["idLibro"].ToString();
+                objLibro.categoria = lectorLibros["Categoria"].ToString();
                 objLibro.ISBN = lectorLibros["ISBN"].ToString();
                 objLibro.titulo = lectorLibros["titulo"].ToString();
                 objLibro.autor = lectorLibros["Autor"].ToString();
@@ -70,10 +77,6 @@ namespace Proy_BibliotecaWeb.SeriviciosWeb
             JavaScriptSerializer js = new JavaScriptSerializer();
             Context.Response.Write(js.Serialize(listaLibros));
         }
-
-
-
-
 
     }
 }

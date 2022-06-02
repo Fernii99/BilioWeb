@@ -42,15 +42,6 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         protected global::System.Web.UI.WebControls.Label txtTituloLibro;
 
         /// <summary>
-        /// Control txtNumeroEjemplar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNumeroEjemplar;
-
-        /// <summary>
         /// Control txtFechaPrestamo.
         /// </summary>
         /// <remarks>
@@ -58,5 +49,14 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaPrestamo;
+
+        /// <summary>
+        /// Control txtFechaDevolucion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaDevolucion;
     }
 }

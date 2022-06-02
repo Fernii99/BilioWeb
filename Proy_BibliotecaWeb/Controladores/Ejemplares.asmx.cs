@@ -51,7 +51,7 @@ namespace Proy_BibliotecaWeb.Controladores
 
             lectorEjemplares = cmdRecuperarLibros.ExecuteReader();
 
-            con.Close();
+           
 
             while (lectorEjemplares.Read())
             {
@@ -69,6 +69,7 @@ namespace Proy_BibliotecaWeb.Controladores
                 listaEjemplares.Add(objEjemplar);
 
             }
+            con.Close();
             JavaScriptSerializer js = new JavaScriptSerializer();
             Context.Response.Write(js.Serialize(listaEjemplares));
         }

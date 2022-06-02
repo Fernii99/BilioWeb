@@ -57,10 +57,7 @@
                 data: { idLibro: idLibro },
                 dataType: 'json',
                 success: function (data) {
-
-
                     $(data).each(function (index, lib) {
-
                         $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" value="Actualizar Ejemplar" data-toggle="modal" data-target="#exampleModal" onclick=" abrirModal(  )"/></td><td>' + lib.idLibro + '</td><td> '
                             + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
                             + lib.baja + '</td><td>' + lib.problema + '</td>');

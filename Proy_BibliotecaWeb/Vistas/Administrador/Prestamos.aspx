@@ -56,7 +56,6 @@
                                         + pres.idLibro + '</td><td>' + pres.idEjemplar + '</td><td>' + pres.idUsuario + '</td><td>'
                                         + pres.fechaPrestamo + '</td><td>' + pres.fechaDevolucion + '</td><td>Si</td></tr>');
                                 }
-
                             });
                         }
                     });
@@ -64,8 +63,6 @@
                     $('#tablaPrestamos tbody').empty();
                 }
             });
-
-
 
             $('#btnFiltrarPrestamos').click(function () {
                 var columnaFiltrar;
@@ -76,9 +73,6 @@
                 } else {
                     columnaFiltrar = $('#ddlColumnasFiltro').val();
                 };
-
-                console.log(SwitchDevueltos + ' ' + txtBusquedaFiltro + ' ' + columnaFiltrar);
-
 
                 $('#tablaPrestamos tbody').empty();
                 $.ajax({
@@ -93,7 +87,7 @@
 
                             $(data).each(function (index, pres) {
 
-                                $('#tablaPrestamos').append('<tr><td>' + '' + '</td><td>' + pres.idPrestamo + '</td><td> '
+                                $('#tablaPrestamos').append('<tr id="' + pres.idPrestamo +' "><td>' + '' + '</td><td>' + pres.idPrestamo + '</td><td> '
                                     + pres.idLibro + '</td><td>' + pres.idEjemplar + '</td><td>' + pres.idUsuario + '</td><td>'
                                     + pres.fechaPrestamo + '</td><td>' + pres.fechaDevolucion + '</td><td>' + pres.devuelto + '</td></tr>');
 
@@ -117,17 +111,20 @@
 
     <script>
         function DevolverPrestamo(idPrestamo) {
-            if (confirm('Realizar devolucion del prestamo' + idPrestamo)) {
+            if (confirm('Realizar devolucion del prestamo: ' + idPrestamo)) {
+               
                 $.ajax({
                     url: "../..//Controladores/Prestamos.asmx/RealizarDevolucion",
                     method: 'post',
                     dataType: 'json',
                     data: { idPRestamo: idPrestamo },
                     success: function (data) {
+                        
                         alert('devolucion correcta');
+                        
                     },
                     error: function (data) {
-
+                        alert('devolucion correcta');
                     }
                 });
             }

@@ -177,5 +177,71 @@ namespace Proy_BibliotecaWeb.Controladores
             Context.Response.Write("Correcto");
 
         }
+
+        [WebMethod]
+        public void RealizarPrestamo()
+        {
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = strConexion;
+
+            SqlCommand cmdCargarPrestamosFiltrado = new SqlCommand();
+            cmdCargarPrestamosFiltrado.CommandType = CommandType.StoredProcedure;
+            cmdCargarPrestamosFiltrado.CommandText = "pr_realizarPrestamo";
+
+            cmdCargarPrestamosFiltrado.Connection = con;
+
+            SqlParameter prmidLibro = new SqlParameter();
+            prmidLibro.SqlDbType = SqlDbType.Char;
+            prmidLibro.ParameterName = "@p_idLibro";
+            prmidLibro.Size = 4;
+
+            SqlParameter prmIdEjemplar = new SqlParameter();
+            prmIdEjemplar.SqlDbType = SqlDbType.Char;
+            prmIdEjemplar.ParameterName = "@p_idEjemplar";
+            prmIdEjemplar.Size = 2; 
+            
+            SqlParameter prmIdUsuario = new SqlParameter();
+            prmIdUsuario.SqlDbType = SqlDbType.Char;
+            prmIdUsuario.ParameterName = "@p_idUsuario";
+            prmIdUsuario.Size = 5;
+
+            SqlParameter prmFechaPrestamo = new SqlParameter();
+            prmFechaPrestamo.SqlDbType = SqlDbType.VarChar;
+            prmFechaPrestamo.ParameterName = "@p_fechaPrestamo";
+
+            SqlParameter prmFechaDevolucion = new SqlParameter();
+            prmFechaDevolucion.SqlDbType = SqlDbType.VarChar;
+            prmFechaDevolucion.ParameterName = "@p_fechaDevolucion";
+
+            
+            cmdCargarPrestamosFiltrado.Parameters.Add(prmidLibro);
+            cmdCargarPrestamosFiltrado.Parameters.Add(prmIdEjemplar);
+            cmdCargarPrestamosFiltrado.Parameters.Add(prmIdUsuario);
+            cmdCargarPrestamosFiltrado.Parameters.Add(prmFechaPrestamo);
+            cmdCargarPrestamosFiltrado.Parameters.Add(prmFechaDevolucion);
+
+            con.Open();
+
+            String Prestamo = Context.Request.Params["fechaPrestamo"];
+            String Devolucion = Context.Request.Params["fechaDevolucion"];
+
+            DateTime fechaPrestamo = DateTime.Today;
+            DateTime fechaDevolucion = DateTime.Today.AddDays(14);
+
+            cmdCargarPrestamosFiltrado.Parameters[0].Value = Context.Request.Params["idLibro"];
+            cmdCargarPrestamosFiltrado.Parameters[1].Value = Context.Request.Params["idEjemplar"];
+            cmdCargarPrestamosFiltrado.Parameters[2].Value = Context.Request.Params["idUsuario"];
+            cmdCargarPrestamosFiltrado.Parameters[3].Value = fechaPrestamo;
+            cmdCargarPrestamosFiltrado.Parameters[4].Value = fechaDevolucion;
+
+            int respuesta = cmdCargarPrestamosFiltrado.ExecuteNonQuery();
+
+            con.Close();
+
+            Context.Response.Write(respuesta);
+
+        }
+
     }
 }

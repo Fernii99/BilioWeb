@@ -7,8 +7,8 @@ namespace Proy_BibliotecaWeb.Clases
 {
     public class Libro
     {
-        public char idLibro { get; set; }
-        public char categoria { get; set; }
+        public String idLibro { get; set; }
+        public String categoria { get; set; }
         public String ISBN { get; set; }
         public String titulo { get; set; }
         public String autor { get; set; }
