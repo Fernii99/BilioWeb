@@ -213,8 +213,16 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\ServiciosUsuarios\Usuarios.disco" />
+    <None Include="Connected Services\ServiciosUsuarios\configuration91.svcinfo" />
+    <None Include="Connected Services\ServiciosUsuarios\configuration.svcinfo" />
+    <None Include="Connected Services\ServiciosUsuarios\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Controladores\Ejemplares.asmx" />
     <Content Include="Controladores\Prestamos.asmx" />
+    <Content Include="Controladores\Usuarios.asmx" />
     <Content Include="HeroBiz\blog-details.html" />
     <Content Include="HeroBiz\blog.html" />
     <Content Include="HeroBiz\changelog.txt" />
@@ -264,12 +272,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ServiciosUsuarios\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controladores\Ejemplares.asmx.cs">
       <DependentUpon>Ejemplares.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controladores\Prestamos.asmx.cs">
       <DependentUpon>Prestamos.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controladores\Usuarios.asmx.cs">
+      <DependentUpon>Usuarios.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Vistas\Administrador\InfoLibro.aspx.cs">
@@ -361,6 +378,7 @@
     <Content Include="assets\vendor\bootstrap\js\bootstrap.js.map" />
     <Content Include="assets\vendor\bootstrap\js\bootstrap.min.js.map" />
     <None Include="Connected Services\ServicioLibros\Libros.wsdl" />
+    <None Include="Connected Services\ServiciosUsuarios\Usuarios.wsdl" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -387,6 +405,7 @@
     <WCFMetadataStorage Include="Connected Services\ServiciosPrestamos\" />
     <WCFMetadataStorage Include="Connected Services\ServiciosEjemplares\" />
     <WCFMetadataStorage Include="Connected Services\ServicioLibros\" />
+    <WCFMetadataStorage Include="Connected Services\ServiciosUsuarios\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

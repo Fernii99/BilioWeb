@@ -36,28 +36,78 @@
 
     <script>
 
+        function tieneNumeros(str) {
+            return /\d/.test(str);
+        }
+
+        function tieneLetras(str) {
+            return /[a-zA-Z]/.test(str);
+        }
+
+        function emailValido(str) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(str);
+        }
+
+
+
         $(document).ready(function () {
 
-            $('#txtNacimiento').keydown(function () {
+            $('#lblErrores').hide();
+            
 
-                var longitudFecha = $('#txtNacimiento').val().length;
-                var fechaActual = $('#txtNacimiento').val();
 
-                if (longitudFecha == 4) {
-                    $('#txtNacimiento').val(fechaActual + '/');
+            $('#btnRegistrarse').click(function () {
 
-                    $('#txtNacimiento').focus();
+                console.log($('#txtDni').val().length);
+
+
+                if ($('#txtNombre').empty == true || $('#txtApellido').empty == true || $('#txtDni').empty == true || $('#txtNacimiento').empty == true || $('#txtEmail').empty == true || $('#txtTelefono').empty == true || $('#txtContrasena').empty == true) {
+                    $('#lblErrores').text('');
+                    $('#lblErrores').append('Por favor rellena todos los campos del registro');
+                    $('#lblErrores').show();
+                }
+                else if (tieneNumeros($('#txtNombre').val) || tieneNumeros($('#txtApellido').val)){
+                    $('#lblErrores').text('');
+                    $('#lblErrores').append('Los campos Nombre y apellido no puede contener numeros');
+                    $('#lblErrores').show();
+                }
+                else if (emailValido($('#txtEmail').val)) {
+                    $('#lblErrores').text('');
+                    $('#lblErrores').append('El email introducido no es valido');
+                    $('#lblErrores').show();
+                }
+                else if (tieneLetras() || tieneLetras()) {
+                    $('#lblErrores').text('');
+                    $('#lblErrores').append('Los campos Nombre y apellido no puede contener numeros');
+                    $('#lblErrores').show();
+                }
+                else if ($('#txtDni').val().length < 9 || $('#txtDni').val().length > 9) {
+                    $('#lblErrores').val('');
+                    $('#lblErrores').append('el dni no es lo suficientemente largo');
+                    $('#lblErrores').show();
+                }
+                else {
+                    $.ajax({
+                        url: "../..//Controladores/Usuarios.asmx/RegistrarUsuario",
+                        method: 'post',
+                        data: { nombre: $('#txtNombre').val(), apellido: $('#txtApellido').val(), dni: $('#txtDni').val(), fechaNacimiento: $('#txtNacimiento').val(), email: $('#txtEmail').val(), telefono: $('#txtTelefono').val(), contrasena: $('#txtContrasena').val()},
+                        dataType: 'json',
+                        success: function (data) {
+                            alert(JSON.stringify(data));
+                        },
+                        error: function (data) {
+                            alert(JSON.stringify(data));
+                        }
+                    });
                 }
 
-                if (longitudFecha == 7) {
-                    $('#txtNacimiento').val(fechaActual + '/');
-                    $('#txtNacimiento').focus();
-
-                }
+                
 
 
             });
 
+            
 
         });
 
@@ -86,25 +136,25 @@
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <input type="text" class="form-control" runat="server" id="txtDni" placeholder="DNI" />
+                                        <input type="text" class="form-control" maxlength="9" runat="server" id="txtDni" placeholder="DNI" />
                                     </div>
                                 </div>
 
                                 <!-- Fecha nacimiento y email la cuenta -->
                                 <div class="row  mb-4">
                                     <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" runat="server" id="txtNacimiento" placeholder="fecha de nacimiento: yyyy/MM/dd" />
+                                        <input type="date"  runat="server" id="txtNacimiento"  />
                                     </div>
 
                                     <div class="form-group col-md-6">
-                                        <input type="text" class="form-control" runat="server" id="txtEmail" placeholder="Email" />
+                                        <input type="email" class="form-control" runat="server" id="txtEmail" placeholder="Email" />
                                     </div>
                                 </div>
 
                                  <!-- telefono, contraseña, confirmar contraseña para las validaciones la cuenta -->
                                 <div class="row mb-4 ">
                                     <div class="form-group col-md-3">
-                                        <input type="text" class="form-control" runat="server" id="txtTelefono" placeholder="Teléfono" />
+                                        <input type="text" class="form-control" maxlength="9" runat="server" id="txtTelefono" placeholder="Teléfono" />
                                     </div>
 
                                     <div class="form-group col-md-3">
@@ -112,12 +162,12 @@
                                     </div>
 
                                     <div class="form-group col-md-3">
-                                        <asp:Button type="button" class="btn btn-primary col-md-12" id="btnRegistrarse" runat="server" Text="Registrarse" OnClick="btnRegistrarse_Click" />
+                                        <input type="button" class="btn btn-primary" id="btnRegistrarse" value="Registrarse" />
                                     </div>
                                     
                                 </div>
 
-                                <asp:Label ID="lblErrores" runat="server" Text="" Visible="false"></asp:Label>
+                                <label id="lblErrores" style="color:red"></label>
 
                             </div>
                         </div>

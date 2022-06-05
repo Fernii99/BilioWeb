@@ -41,7 +41,8 @@
          * Funciones JQUERY 
          */
         $(document).ready(function () {
-
+            $('#ListadoEjemplares').show();
+            $('#formularioagregarEjemplar').hide();
 
             /* 
             * Función AJAX para cargar la tabla con la informacion de los ejemplares que hay del libro seleccionado 
@@ -84,6 +85,18 @@
                 });
 
             });
+
+            $('#btnMostrarAgregarEjemplar').click(function () {
+                $('#formularioagregarEjemplar').show();
+                $('#ListadoEjemplares').hide();
+
+            });
+            $('#btnMostrarTablaEjemplares').click(function () {
+                $('#formularioagregarEjemplar').hide();
+                $('#ListadoEjemplares').show();
+
+            });
+
 
             $('#btnAgregarEjemplar').click(function () {
                 var idLibro = $('#txtAgregarEjemplarIdLIbro').val();
@@ -130,7 +143,7 @@
 
 
         function abrirModal() {
-           
+
             $('#exampleModal').modal('show');
 
         };
@@ -238,8 +251,12 @@
                 </div>
             </div>
         </div>
+        <div class="container mb-5">
+            <input type="button" class="btn btn-primary" value="Ver listado de ejemplares" data-toggle="modal" data-target="agregarEjemplarModal" id="btnMostrarTablaEjemplares" />
+            <input type="button" class="btn btn-primary" value="Agregar nuevo ejemplar" data-toggle="modal" data-target="agregarEjemplarModal" id="btnMostrarAgregarEjemplar" />
+        </div>
 
-        <div style="margin-bottom: 40px; margin-left: 10%; width: 80%">
+        <div style="margin-bottom: 40px; margin-left: 10%; width: 80%" id="ListadoEjemplares">
             <table class="table" id="tablaEjemplares">
                 <thead class="thead-light">
                     <tr>
@@ -257,114 +274,38 @@
             </table>
 
 
-            <input type="button" class="btn btn-primary" value="Agregar nuevo ejemplar" data-toggle="modal" data-target="agregarEjemplarModal" onclick="abrirAgregarEjemplar()" />
+
         </div>
-
-
-        <!-- ***************************************************************************************************************************** -->
-        <!-- **************************** MODAL PARA LA ACTUALIZACION DE EL EJEMPLAR SOLUCIONADO ***************************************** -->
-        <!-- ***************************************************************************************************************************** -->
-
-
-
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="txtTituloModalIdEjemplar">Ejemplar numero: </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-
-                    <div class="modal-body">
-                        <!-- 2 TEXTBOX (ID DEL LIBRO Y EJEMPLAR) -->
-                        <div class="row justify-content-center">
-                            <!-- ID DEL LIBRO DENTRO DEL MODAL -->
-                            <div class="col-lg-6">
-                                <label for="exampleInputEmail1">Id Libro:</label>
-                                <input class="form-control" id="txtModalIdLibro" aria-describedby="idEjemplar" disabled="disabled" />
-                            </div>
-                            <!-- ID DEL EJEMPLAR DENTRO DEL MODAL -->
-                            <div class="col-lg-6">
-                                <label for="exampleInputEmail1">Id Ejemplar:</label>
-                                <input type="email" class="form-control" id="txtModalIdEjemplar" aria-describedby="emailHelp" disabled="disabled" />
-                            </div>
-                        </div>
-
-
-                        <!-- TEXTBOX (FECHA DE RECEPCION) -->
-                        <div class="row justify-content-center mt-2">
-                            <div class="col-lg-12">
-                                <label for="exampleInputEmail1">Fecha Recepcion:</label>
-                                <input type="email" class="form-control" id="txtModalFechaRecepcion" aria-describedby="emailHelp" placeholder="Enter email" disabled="disabled" />
-                            </div>
-                        </div>
-
-                        <!-- CHECKBOX Y TEXTBOX (LIBRO DISPONIBLE Y PROBLEMA) -->
-                        <div class="row justify-content-center mt-2">
-                            <div class="col-lg-4">
-                                <label class="col-lg-12" for="exampleInputEmail1">Libro disponible:</label>
-
-                                <div class="form-check d-inline-block">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="checBoxModalSi" />
-                                    <label class="form-check-label" for="flexRadioDefault1">Si </label>
-                                </div>
-
-                                <div class="form-check d-inline-block">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="checBoxModalNo" />
-                                    <label class="form-check-label" for="flexRadioDefault2">No </label>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <label for="exampleInputEmail1">Problema:</label>
-                                <input type="email" class="form-control" id="txtModalProblema" aria-describedby="modalProblema" placeholder="" />
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelarModal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="btnActualizarEjemplarModal">Actualizar Ejemplar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
 
         <!-- ***************************************************************************************************************************** -->
         <!-- ****************************FORMULARIO  PARA LA INSERCION UN NUEVO EJEMPLERA A LA BASE DE DATOS *********************************** -->
         <!-- ***************************************************************************************************************************** -->
-        <div class="container mb-5">
+        <div class="container mb-5" id="formularioagregarEjemplar">
             <div class="row">
                 <div class="col-sm-4">
                     <asp:Label ID="Label7" runat="server" Text="Id del Libro: "></asp:Label>
                     <asp:TextBox ID="txtAgregarEjemplarIdLIbro" class="form-control" aria-label="First name" runat="server" disabled="disabled"></asp:TextBox>
                     <br />
                 </div>
-                <div class="col-sm-3 ">
+                <div class="col-sm-3">
                     <asp:Label ID="Label9" runat="server" Text="Estado del libro:"></asp:Label><br />
-                    <asp:DropDownList ID="ddlAgregarEjemplarEstado" runat="server">
+                    <asp:DropDownList ID="ddlAgregarEjemplarEstado" runat="server" CssClass="btn btn-primary dropdown-toggle">
                         <asp:ListItem Selected="True">Selecciona estado del libro</asp:ListItem>
                         <asp:ListItem>Disponible</asp:ListItem>
                         <asp:ListItem>No Disponible</asp:ListItem>
                     </asp:DropDownList><br />
-               
+
                     <br />
                 </div>
                 <div class="col-sm-4 ">
                     <asp:Label ID="Label11" runat="server" Text="Problema:"></asp:Label>
-                    <input type="text" id="txtAgregarEjemplarProblema" class="form-control" placeholder="First name" aria-label="First name" runat="server"/><br />
+                    <input type="text" id="txtAgregarEjemplarProblema" class="form-control" placeholder="por defecto: Ninguno" aria-label="First name" runat="server" /><br />
                     <br />
                 </div>
-                
+
             </div>
-             <input type="button" id="btnAgregarEjemplar" value="ACTUALIZAR EJEMPLAR" runat="server" />
-          
+            <input type="button" id="btnAgregarEjemplar" value="AGREGAR EJEMPLAR" runat="server" class="btn btn-primary" />
+
         </div>
     </form>
 
