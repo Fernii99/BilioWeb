@@ -188,8 +188,7 @@
             <label class="form-check-label d-inline-block">| Columna de la tabla para filtrar:</label>
 
             <asp:DropDownList ID="ddlColumnasFiltro" runat="server">
-                <asp:ListItem Value="Default" checked="checked">Elija una columna </asp:ListItem>
-                <asp:ListItem Value="titulo">Titulo del Libro</asp:ListItem>
+                <asp:ListItem Value="titulo" checked="checked">Titulo del Libro</asp:ListItem>
                 <asp:ListItem Value="nombre">Nombre de Usuario</asp:ListItem>
             </asp:DropDownList>
 

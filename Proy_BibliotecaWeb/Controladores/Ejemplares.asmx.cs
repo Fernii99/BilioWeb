@@ -79,8 +79,6 @@ namespace Proy_BibliotecaWeb.Controladores
         public void ActualizarEjemplar()
         {
 
-            List<Clases.Ejemplar> listaEjemplares = new List<Clases.Ejemplar>();
-
             SqlConnection con = new SqlConnection();
             con.ConnectionString = strConexion;
 
@@ -108,7 +106,6 @@ namespace Proy_BibliotecaWeb.Controladores
             prmProblema.SqlDbType = SqlDbType.VarChar;
             prmProblema.Size = 300;
 
-            
             cmdRecuperarLibros.CommandType = CommandType.StoredProcedure;
             cmdRecuperarLibros.CommandText = "pr_actualizarEjemplar";
 
@@ -134,6 +131,7 @@ namespace Proy_BibliotecaWeb.Controladores
         }
 
         [WebMethod]
+        
         public void InsertarEjemplar()
         {
             SqlConnection con = new SqlConnection();
@@ -182,8 +180,67 @@ namespace Proy_BibliotecaWeb.Controladores
 
             con.Close();
 
-            Context.Response.Write("Actualizacion Correcta");
+            Context.Response.Write("Insercion Correcta");
 
+        }
+
+        [WebMethod]
+        public void InformacionEjemplarSeleccionado()
+        {
+
+            List<Clases.Ejemplar> EjemplarRecuperado = new List<Clases.Ejemplar>();
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = strConexion;
+
+            SqlCommand cmdRecuperarLibros = new SqlCommand();
+            cmdRecuperarLibros.Connection = con;
+
+            SqlParameter prmidLibro = new SqlParameter();
+            prmidLibro.ParameterName = "@p_idLibro";
+            prmidLibro.SqlDbType = SqlDbType.Char;
+
+            SqlParameter prmidEjemplar = new SqlParameter();
+            prmidEjemplar.ParameterName = "@p_idEjemplar";
+            prmidEjemplar.SqlDbType = SqlDbType.Char;
+
+            SqlDataReader lectorEjemplares;
+
+            cmdRecuperarLibros.CommandType = CommandType.StoredProcedure;
+            cmdRecuperarLibros.CommandText = "pr_recuperarEjemplarSeleccionado";
+
+            cmdRecuperarLibros.Parameters.Add(prmidLibro);
+            cmdRecuperarLibros.Parameters.Add(prmidEjemplar);
+
+            con.Open();
+
+            cmdRecuperarLibros.Parameters[0].Value = Context.Request.Params["idLibro"];
+            cmdRecuperarLibros.Parameters[1].Value = Context.Request.Params["idEjemplar"];
+
+            lectorEjemplares = cmdRecuperarLibros.ExecuteReader();
+
+            
+
+            while (lectorEjemplares.Read())
+            {
+
+                Clases.Ejemplar objEjemplar = new Clases.Ejemplar();
+
+                objEjemplar.idLibro = lectorEjemplares["idLibro"].ToString();
+                objEjemplar.idEjemplar = lectorEjemplares["idEjemplar"].ToString();
+                objEjemplar.fechaRecepcion = lectorEjemplares["fechaRecepcion"].ToString();
+                objEjemplar.estado = lectorEjemplares["estado"].ToString();
+                objEjemplar.baja = lectorEjemplares["baja"].ToString();
+                objEjemplar.problema = lectorEjemplares["problema"].ToString();
+
+                EjemplarRecuperado.Add(objEjemplar);
+
+            }
+
+
+            con.Close();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(EjemplarRecuperado));
         }
 
 

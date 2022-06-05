@@ -43,6 +43,7 @@
         $(document).ready(function () {
             $('#ListadoEjemplares').show();
             $('#formularioagregarEjemplar').hide();
+            $('#formularioActualizarEjemplar').hide();
 
             /* 
             * Función AJAX para cargar la tabla con la informacion de los ejemplares que hay del libro seleccionado 
@@ -58,42 +59,59 @@
                 data: { idLibro: idLibro },
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data[5].estado);
                     $(data).each(function (index, lib) {
-                        $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" value="Actualizar Ejemplar" data-toggle="modal" data-target="#exampleModal" onclick=" abrirModal(  )"/></td><td>' + lib.idLibro + '</td><td> '
-                            + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
-                            + lib.baja + '</td><td>' + lib.problema + '</td>');
+                        if (lib.estado == "Prestado     ") {
+                            $('#tablaEjemplares').append('<tr ><td><input type="button" class="btn btn-danger" value="No es posible actualizar"  /></td><td>' + lib.idLibro + '</td><td> '
+                                + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
+                                + lib.baja + '</td><td>' + lib.problema + '</td>');
+                        }
+                        else {
+                            $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" value="Actualizar Ejemplar"  onclick=" AbrirFormularioActualizarEjemplar( '+ lib.idEjemplar + ' )"/></td><td>' + lib.idLibro + '</td><td> '
+                                + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
+                                + lib.baja + '</td><td>' + lib.problema + '</td>');
+                        }
                     });
                 },
             });
 
-            /*
-             * Funcion Jquery que detecta el click del modal para actualizar la informacion del ejemplar
-             * 
-             */
-            $('#btnActualizarEjemplarModal').click(function () {
 
-
-
-                $.ajax({
-                    url: "../../Controladores/Ejemplares.asmx/ActualizarEjemplar",
-                    method: 'post',
-                    data: { idLibro: idLibro, idEjemplar: idEjemplar, estado: estado, baja: baja, problema: problema },
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                    },
-                });
-
-            });
 
             $('#btnMostrarAgregarEjemplar').click(function () {
                 $('#formularioagregarEjemplar').show();
                 $('#ListadoEjemplares').hide();
+                $('#formularioActualizarEjemplar').hide();
+
 
             });
+
             $('#btnMostrarTablaEjemplares').click(function () {
+
                 $('#formularioagregarEjemplar').hide();
+                $('#formularioActualizarEjemplar').hide();
                 $('#ListadoEjemplares').show();
+                $('#tablaEjemplares tbody').empty();
+
+                $.ajax({
+                    url: "../..//Controladores/Ejemplares.asmx/RecuperarEjemplares",
+                    method: 'post',
+                    data: { idLibro: idLibro },
+                    dataType: 'json',
+                    success: function (data) {
+                        $(data).each(function (index, lib) {
+                            if (lib.estado == "Prestado     ") {
+                                $('#tablaEjemplares').append('<tr ><td><input type="button" class="btn btn-danger" value="No es posible actualizar"  /></td><td>' + lib.idLibro + '</td><td> '
+                                    + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
+                                    + lib.baja + '</td><td>' + lib.problema + '</td>');
+                            }
+                            else {
+                                $('#tablaEjemplares').append('<tr ><td> <input type="button" class="btn btn-primary" value="Actualizar Ejemplar"  onclick=" AbrirFormularioActualizarEjemplar( ' +  lib.idEjemplar + ' )"/></td><td>' + lib.idLibro + '</td><td> '
+                                    + lib.idEjemplar + '</td><td>' + lib.fechaRecepcion + '</td><td>' + lib.estado + '</td><td>'
+                                    + lib.baja + '</td><td>' + lib.problema + '</td>');
+                            }
+                        });
+                    },
+                });
 
             });
 
@@ -130,23 +148,78 @@
 
 
 
+        function AbrirFormularioActualizarEjemplar(idEjemplar) {
+
+            var ParametrosURL = location.search.substring(1);
+            var valores = ParametrosURL.split("=");
+            var idLibro = valores[1];
+            $('#formularioagregarEjemplar').hide();
+            $('#ListadoEjemplares').hide();
+            $('#formularioActualizarEjemplar').show();
+
+            $.ajax({
+                url: "../../Controladores/Ejemplares.asmx/InformacionEjemplarSeleccionado",
+                method: 'post',
+                dataType: 'json',
+                data: { idLibro: idLibro, idEjemplar: idEjemplar },
+                success: function (data) {
+
+                    $('#txtIdLibroModal').val(data[0].idLibro);
+                    $('#txtIdEjemplarModal').val(data[0].idEjemplar);
+                    $('#txtFechaRecepcionModal').val(data[0].fechaRecepcion);
+                    $('#txtEstadoModal').val(data[0].estado);
+                    if (data[0].baja === "True") {
+                        $('#txtBajaModal').prop('checked', true);
+                    }
+                    else {
+                        $('#txtBajaModal').prop('checked', false);
+                    }
+
+                    $('#txtProblemaModal').val(data[0].problema);
+
+                },
+                error: function (data) {
+                    alert(JSON.stringify(data));
+                }
+            });
 
 
-
-    </script>
-    <script>
-
-        var modal = document.getElementById("exampleModal");
-        var modal = document.getElementById("agregarEjemplarModal");
-
-
-
-
-        function abrirModal() {
-
-            $('#exampleModal').modal('show');
 
         };
+
+        /*
+        * Funcion Jquery que detecta el click del modal para actualizar la informacion del ejemplar
+        *
+        */
+
+        function ActualizarEjemplar() {
+            var baja;
+            var ParametrosURL = location.search.substring(1);
+            var valores = ParametrosURL.split("=");
+            var idLibro = valores[1];
+
+            if ($('#txtBajaModal').is('checked') == true) {
+                baja = true;
+            } else {
+                baja = false;
+            }
+
+            console.log(idLibro + ' ' + $('#txtIdEjemplarModal').val() + ' ' + $('#txtEstadoModal').val() + ' ' + baja + ' ' + $('#txtProblemaModal').val());
+
+            $.ajax({
+                url: "../../Controladores/Ejemplares.asmx/ActualizarEjemplar",
+                method: 'post',
+                data: { idLibro: idLibro, idEjemplar: $('#txtIdEjemplarModal').val(), estado: $('#txtEstadoModal').val(), baja: baja, problema: $('#txtProblemaModal').val() },
+                dataType: 'json',
+                success: function (data) {
+                    alert(JSON.stringify(data));
+                },
+                error: function (data) {
+                    alert(JSON.stringify(data));
+                }
+            });
+
+        }
 
     </script>
 
@@ -305,8 +378,43 @@
 
             </div>
             <input type="button" id="btnAgregarEjemplar" value="AGREGAR EJEMPLAR" runat="server" class="btn btn-primary" />
-
         </div>
+
+
+        <div class="container" id="formularioActualizarEjemplar">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="exampleInputEmail1">Id Libro:</label>
+                    <input type="text" class="form-control" id="txtIdLibroModal" disabled="disabled" />
+                </div>
+                <div class="col-sm-4">
+                    <label for="exampleInputEmail1">Id Ejemplar:</label>
+                    <input type="text" class="form-control" id="txtIdEjemplarModal" disabled="disabled" />
+                </div>
+                <div class="col-sm-4">
+                    <label for="exampleInputEmail1">Fecha Recepcion:</label>
+                    <input type="text" class="form-control" id="txtFechaRecepcionModal" disabled="disabled" />
+                </div>
+                <div class="col-sm-4">
+                    <label for="exampleInputEmail1">Estado:</label>
+                    <input type="text" class="form-control" id="txtEstadoModal" disabled="disabled" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="exampleInputEmail1">Baja: </label>
+                    <br />
+                    <asp:CheckBox ID="txtBajaModal" runat="server" />
+                </div>
+                <div class="col-sm-10">
+                    <label for="exampleInputEmail1">Problema:</label>
+                    <input type="text" class="form-control" id="txtProblemaModal" />
+                </div>
+            </div>
+            <input type="button" class="btn btn-primary" value="Actualizar Ejemplar" onclick="ActualizarEjemplar();" />
+        </div>
+
+
     </form>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
