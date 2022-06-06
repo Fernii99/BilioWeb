@@ -33,7 +33,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
-
+         //Funcion para agregar un Prestamo a la base de datos
         $(document).ready(function () {
             $('#btnRealizarPrestamo').click(function () {
                 var idLibro = $('#txtCodigoLibro').val();
@@ -57,21 +57,19 @@
                     }
                 });
             });
-
         });
-
     </script>
 
 </head>
+
 <body>
     <form id="form1" runat="server">
-
+        <!-- Navbar -->
         <header id="header" class="header fixed-top" data-scrollto-offset="0">
             <div class="container-fluid d-flex align-items-center justify-content-between">
 
-                <a href="index.html" class="logo d-flex align-items-center scrollto me-auto me-lg-0">
-                    <!-- Uncomment the line below if you also wish to use an image logo -->
-                    <!-- <img src="assets/img/logo.png" alt=""> -->
+                <a  class="logo d-flex align-items-center scrollto me-auto me-lg-0">
+                  
                     <h1>Biblio Web:</h1>
                 </a>
 
@@ -80,22 +78,24 @@
                         <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
                         <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
                         <li><a class="nav-link scrollto" href="RealizarPrestamo.aspx">Realizar Prestamos</a></li>
-                        <li><a class="nav-link scrollto" href="AmpliarPrestamo.aspx">Ampliar Prestamo</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
                 </nav>
                 <!-- .navbar -->
-                <asp:Button ID="btnCerrarSesion" class="btn-getstarted scrollto" runat="server" Text="Cerrar Sesion" />
+                <asp:Button ID="btnCerrarSesion" class="btn-getstarted scrollto" runat="server" Text="Cerrar Sesion" OnClick="btnCerrarSesion_Click" />
             </div>
         </header>
 
-
+        <!-- Jumbotron con la informacion de la pestaña -->
         <section id="hero-animated" class="hero-animated d-flex align-items-center">
             <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
                 <h2>
                     <asp:Label ID="txtTituloLibro" runat="server" Text="Realizar Prestamo"></asp:Label></h2>
             </div>
         </section>
+
+
+        <!-- Formulario para la realizacion de un prestamo -->
 
         <div class="container col-sm-4">
             <div class="form-group">

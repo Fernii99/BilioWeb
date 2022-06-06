@@ -78,6 +78,42 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtEditorial;
 
         /// <summary>
+        /// Control txtNombreEscritor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtNombreEscritor;
+
+        /// <summary>
+        /// Control txtApellidoEscritor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtApellidoEscritor;
+
+        /// <summary>
+        /// Control dateNacimientoEscritor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateNacimientoEscritor;
+
+        /// <summary>
+        /// Control txtCategoria.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCategoria;
+
+        /// <summary>
         /// Control DS_Categorias.
         /// </summary>
         /// <remarks>

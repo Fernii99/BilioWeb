@@ -36,6 +36,7 @@
 
     <script>
 
+        //Funciones para la validacion de los campos
         function tieneNumeros(str) {
             return /\d/.test(str);
         }
@@ -50,17 +51,16 @@
         }
 
 
-
+        
         $(document).ready(function () {
 
             $('#lblErrores').hide();
-            
 
 
-            $('#btnRegistrarse').click(function () {
 
-                console.log($('#txtDni').val().length);
-
+            //Funcion ejecutada al pulsar el boton de registrarse,
+            //Que detecta si todos los campos estan bien y llama mediante ajax a su funcion para registrar la informacion
+            $('#btnRegistrarse').click(function () {    
 
                 if ($('#txtNombre').empty == true || $('#txtApellido').empty == true || $('#txtDni').empty == true || $('#txtNacimiento').empty == true || $('#txtEmail').empty == true || $('#txtTelefono').empty == true || $('#txtContrasena').empty == true) {
                     $('#lblErrores').text('');
@@ -102,9 +102,7 @@
                     });
                 }
 
-                
-
-
+  
             });
 
             

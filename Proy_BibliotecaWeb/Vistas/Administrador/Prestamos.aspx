@@ -37,6 +37,7 @@
     <script>
         $(document).ready(function () {
 
+            //Funcion que recupera TODOS los prestamos que se han hecho hasta la fecha actual
             $('#checkVerTodosLosPrestamos').click(function () {
                 if ($('#checkVerTodosLosPrestamos').is(':checked')) {
                     $.ajax({
@@ -64,6 +65,7 @@
                 }
             });
 
+            //Boton para filtrar los prestamos dependiendo de la seleccion que haya realizado el usuario en la barra de filtro
             $('#btnFiltrarPrestamos').click(function () {
                 var columnaFiltrar;
                 var SwitchDevueltos = $('#switchEstadosPrestamos').is(':checked');
@@ -87,7 +89,7 @@
 
                             $(data).each(function (index, pres) {
 
-                                $('#tablaPrestamos').append('<tr id="' + pres.idPrestamo +' "><td>' + '' + '</td><td>' + pres.idPrestamo + '</td><td> '
+                                $('#tablaPrestamos').append('<tr id="' + pres.idPrestamo + ' "><td>' + '' + '</td><td>' + pres.idPrestamo + '</td><td> '
                                     + pres.idLibro + '</td><td>' + pres.idEjemplar + '</td><td>' + pres.idUsuario + '</td><td>'
                                     + pres.fechaPrestamo + '</td><td>' + pres.fechaDevolucion + '</td><td>' + pres.devuelto + '</td></tr>');
 
@@ -107,21 +109,19 @@
             });
         });
 
-    </script>
-
-    <script>
+        //Funcion para realizar la devolucion de un prestamo
         function DevolverPrestamo(idPrestamo) {
             if (confirm('Realizar devolucion del prestamo: ' + idPrestamo)) {
-               
+
                 $.ajax({
                     url: "../..//Controladores/Prestamos.asmx/RealizarDevolucion",
                     method: 'post',
                     dataType: 'json',
                     data: { idPRestamo: idPrestamo },
                     success: function (data) {
-                        
+
                         alert('devolucion correcta');
-                        
+
                     },
                     error: function (data) {
                         alert('devolucion correcta');
@@ -146,12 +146,11 @@
                     <h1>Biblio Web:</h1>
                 </a>
 
-               <nav id="navbar" class="navbar">
+                <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
                         <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
                         <li><a class="nav-link scrollto" href="RealizarPrestamo.aspx">Realizar Prestamos</a></li>
-                        <li><a class="nav-link scrollto" href="AmpliarPrestamo.aspx">Ampliar Prestamo</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
                 </nav>
@@ -161,7 +160,7 @@
             </div>
         </header>
 
-
+        <!-- Jumbotron con la informacion del libro -->
         <section id="hero-animated" class="hero-animated d-flex align-items-center">
             <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
                 <h2>
@@ -170,7 +169,7 @@
         </section>
 
 
-
+        <!-- Botones para el manejo de la informacion recuperada y mostrada en la tabla de los prestamos -->
         <div class="container">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="checkVerTodosLosPrestamos">
@@ -200,7 +199,7 @@
 
         </div>
 
-
+        <!-- Tabla para mostrar la informacion de los prestamos -->
         <div class="container">
             <table id="tablaPrestamos" class="table table-striped">
                 <thead>
@@ -218,12 +217,6 @@
                 <tbody>
                 </tbody>
             </table>
-
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-end"  id="NavegadorPrestamos">
-                   
-                </ul>
-            </nav>
         </div>
     </form>
 

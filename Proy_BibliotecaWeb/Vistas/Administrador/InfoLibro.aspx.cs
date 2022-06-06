@@ -39,7 +39,7 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             Session.Clear();
         }
 
-        //CARGAR LA INFORMACION ESPECIFICA DEL LIBRO
+        //CARGAR LA INFORMACION ESPECIFICA DEL LIBRO EN LOS LABELS SUPERIORES
         private void cargarInformacionLibro()
         {
             String strConexion = ConfigurationManager.ConnectionStrings["BiblioWeb"].ConnectionString;

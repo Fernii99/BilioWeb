@@ -85,7 +85,6 @@ namespace Proy_BibliotecaWeb.SeriviciosWeb
             cmdAgregarLibro.CommandText = "pr_AgregarLibro";
             cmdAgregarLibro.Connection = con;
 
-            SqlDataReader lectorLibros;
 
             SqlParameter prmCategoria = new SqlParameter();
             prmCategoria.SqlDbType = SqlDbType.Char;
@@ -140,6 +139,84 @@ namespace Proy_BibliotecaWeb.SeriviciosWeb
 
             Context.Response.Write(salida);
             
+        }
+
+
+        //Servicio para agregar un escritor nuevo a la base de datos
+        [WebMethod]
+        public void AgregarEscritor()
+        {
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = strConexion;
+
+            SqlCommand cmdAgregarEscritor = new SqlCommand();
+            cmdAgregarEscritor.CommandType = CommandType.StoredProcedure;
+            cmdAgregarEscritor.CommandText = "pr_AgregarEscritor";
+            cmdAgregarEscritor.Connection = con;
+
+            SqlParameter prmNombre = new SqlParameter();
+            prmNombre.SqlDbType = SqlDbType.VarChar;
+            prmNombre.ParameterName = "@p_nombre";
+            prmNombre.Size = 50;
+
+            SqlParameter prmApellido = new SqlParameter();
+            prmApellido.SqlDbType = SqlDbType.VarChar;
+            prmApellido.ParameterName = "@p_apellido";
+            prmApellido.Size = 50;
+
+            SqlParameter prmNacimiento = new SqlParameter();
+            prmNacimiento.SqlDbType = SqlDbType.Date;
+            prmNacimiento.ParameterName = "@p_fechaNacimiento";
+
+            cmdAgregarEscritor.Parameters.Add(prmNombre);
+            cmdAgregarEscritor.Parameters.Add(prmApellido);
+            cmdAgregarEscritor.Parameters.Add(prmNacimiento);
+
+            con.Open();
+
+            cmdAgregarEscritor.Parameters[0].Value = Context.Request.Params["nombre"];
+            cmdAgregarEscritor.Parameters[1].Value = Context.Request.Params["apellido"];
+            cmdAgregarEscritor.Parameters[2].Value = Context.Request.Params["nacimiento"];
+            
+
+            int salida = cmdAgregarEscritor.ExecuteNonQuery();
+
+            con.Close();
+
+            Context.Response.Write(salida);
+
+        }
+
+        [WebMethod]
+        public void AgregarCategoria()
+        {
+
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = strConexion;
+
+            SqlCommand cmdAgregarCategoria = new SqlCommand();
+            cmdAgregarCategoria.CommandType = CommandType.StoredProcedure;
+            cmdAgregarCategoria.CommandText = "pr_AgregarCategoria";
+            cmdAgregarCategoria.Connection = con;
+
+            SqlParameter prmDescripcion = new SqlParameter();
+            prmDescripcion.SqlDbType = SqlDbType.VarChar;
+            prmDescripcion.ParameterName = "@p_descripcion";
+            prmDescripcion.Size = 50;
+
+            cmdAgregarCategoria.Parameters.Add(prmDescripcion);
+
+            con.Open();
+
+            cmdAgregarCategoria.Parameters[0].Value = Context.Request.Params["descripcion"];
+
+            int salida = cmdAgregarCategoria.ExecuteNonQuery();
+
+            con.Close();
+
+            Context.Response.Write(salida);
+
         }
 
     }

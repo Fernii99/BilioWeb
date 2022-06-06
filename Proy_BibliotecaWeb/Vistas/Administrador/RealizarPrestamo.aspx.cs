@@ -11,6 +11,12 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Denegar acceso al usuario si no ha iniciado sesion
+            if (Convert.ToInt32(Session["idUsuario"]) != 1)
+            {
+                Response.Redirect("../login.aspx");
+            }
+            
 
             txtFechaPrestamo.Text = DateTime.Today.ToString("yyyy/dd/MM");
             txtFechaPrestamo.DataBind();
@@ -18,6 +24,13 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
             txtFechaDevolucion.Text = DateTime.Today.AddDays(14).ToString("yyyy/dd/MM");
             txtFechaPrestamo.DataBind();
 
+        }
+
+        protected void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            //Redirigir al usuario y vaciar la session actual
+            Response.Redirect("../login.aspx");
+            Session.Clear();
         }
     }
 }

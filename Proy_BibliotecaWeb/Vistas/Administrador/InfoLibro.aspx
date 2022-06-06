@@ -59,7 +59,6 @@
                 data: { idLibro: idLibro },
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data[5].estado);
                     $(data).each(function (index, lib) {
                         if (lib.estado == "Prestado     ") {
                             $('#tablaEjemplares').append('<tr ><td><input type="button" class="btn btn-danger" value="No es posible actualizar"  /></td><td>' + lib.idLibro + '</td><td> '
@@ -76,7 +75,7 @@
             });
 
 
-
+            //Funcion para mostrar el formulario de agregar un ejemplar y ocultar los demas 
             $('#btnMostrarAgregarEjemplar').click(function () {
                 $('#formularioagregarEjemplar').show();
                 $('#ListadoEjemplares').hide();
@@ -85,6 +84,7 @@
 
             });
 
+            //Funcion para mostrar la tabla con la informacionde los ejemplares y ocultar los demas 
             $('#btnMostrarTablaEjemplares').click(function () {
 
                 $('#formularioagregarEjemplar').hide();
@@ -115,7 +115,7 @@
 
             });
 
-
+            //Funcion para agregar un ejemplar a la base de datos
             $('#btnAgregarEjemplar').click(function () {
                 var idLibro = $('#txtAgregarEjemplarIdLIbro').val();
                 var problema = $('#txtAgregarEjemplarProblema').val();
@@ -147,6 +147,7 @@
 
 
 
+            //Funcion JavaScript para mostrar el formulario de agregar un ejemplar y ocultar los demas 
 
         function AbrirFormularioActualizarEjemplar(idEjemplar) {
 
@@ -188,8 +189,7 @@
         };
 
         /*
-        * Funcion Jquery que detecta el click del modal para actualizar la informacion del ejemplar
-        *
+        * Funcion JavaScript que detecta el click del modal para actualizar la informacion del ejemplar
         */
 
         function ActualizarEjemplar() {
@@ -233,7 +233,7 @@
         <header id="header" class="header fixed-top" data-scrollto-offset="0">
             <div class="container-fluid d-flex align-items-center justify-content-between">
 
-                <a href="index.html" class="logo d-flex align-items-center scrollto me-auto me-lg-0">
+                <a  class="logo d-flex align-items-center scrollto me-auto me-lg-0">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
                     <!-- <img src="assets/img/logo.png" alt=""> -->
                     <h1>Biblio Web:</h1>
@@ -244,7 +244,6 @@
                         <li><a class="nav-link scrollto" href="AdminHome.aspx">Listado de Libros</a></li>
                         <li><a class="nav-link scrollto" href="Prestamos.aspx">Prestamos</a></li>
                         <li><a class="nav-link scrollto" href="RealizarPrestamo.aspx">Realizar Prestamos</a></li>
-                        <li><a class="nav-link scrollto" href="AmpliarPrestamo.aspx">Ampliar Prestamo</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle d-none"></i>
                 </nav>
@@ -324,11 +323,14 @@
                 </div>
             </div>
         </div>
+
+        <!-- Botones para gregar un nuevo ejemplar o visualizar la tabla -->
         <div class="container mb-5">
             <input type="button" class="btn btn-primary" value="Ver listado de ejemplares" data-toggle="modal" data-target="agregarEjemplarModal" id="btnMostrarTablaEjemplares" />
             <input type="button" class="btn btn-primary" value="Agregar nuevo ejemplar" data-toggle="modal" data-target="agregarEjemplarModal" id="btnMostrarAgregarEjemplar" />
         </div>
 
+        <!-- Tabla con la informacion  de los ejemplares y su estado-->
         <div style="margin-bottom: 40px; margin-left: 10%; width: 80%" id="ListadoEjemplares">
             <table class="table" id="tablaEjemplares">
                 <thead class="thead-light">

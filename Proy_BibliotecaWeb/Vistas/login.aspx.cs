@@ -13,11 +13,6 @@ namespace Proy_BibliotecaWeb
     public partial class login : System.Web.UI.Page
     {
         
-        
-        
-
-        
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -25,7 +20,9 @@ namespace Proy_BibliotecaWeb
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-
+            //Funcion para buscar la existencia de un usuario en la base de datos mediante el mail y contraseña
+            // y en el caso de existir generar una sesion con la informacion del usuario y su rol,
+            //y redireccion a su página correspondiente
             String strConexion = ConfigurationManager.ConnectionStrings["Biblioweb"].ConnectionString;
 
             SqlConnection conexion = new SqlConnection();

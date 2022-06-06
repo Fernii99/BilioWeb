@@ -14,7 +14,7 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            //Codigo que impide acceder a la pestaña sin iniciar sesion primeramente
             if (Convert.ToInt32(Session["idUsuario"]) != 1)
             {
                 Response.Redirect("../login.aspx");
@@ -28,7 +28,9 @@ namespace Proy_BibliotecaWeb.Vistas.Administrador
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
+            //boton para cerrar sesion, que redirige y limpia la session almacenada
             Response.Redirect("../login.aspx");
+            Session.Clear();
         }
 
     }
